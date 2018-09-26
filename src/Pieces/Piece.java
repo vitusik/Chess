@@ -1,34 +1,29 @@
 package Pieces;
-
+import Board.Board;
 import java.util.ArrayList;
 
 public abstract class Piece {
 
-    protected enum MoveTypes {VERTICAL, HORIZONTAL, DIAGONAL, KNIGHT, PAWN_MOVE, PAWN_ATTACK}
     protected enum Player {BLACK, WHITE}
-
-    public final int X_UPPER_BOUND = 7;
-    public final int Y_UPPER_BOUND = 7;
-    public final int X_LOWER_BOUND = 0;
-    public final int Y_LOWER_BOUND = 0;
 
     private int x_coord;
     private int y_coord;
     private Player player;
-    private ArrayList<MoveTypes> allowed_moves;
+    protected ArrayList<MoveType> allowed_moves;
 
     Piece(int x, int y, Player p)
     {
         x_coord = x;
         y_coord = y;
         player = p;
+        allowed_moves = new ArrayList<>();
     }
 
-    public int getX_coord() {
+    public int getx_coord() {
         return x_coord;
     }
 
-    public void setX_coord(int x_coord) {
+    public void setx_coord(int x_coord) {
         this.x_coord = x_coord;
     }
 
@@ -48,20 +43,35 @@ public abstract class Piece {
         this.player = player;
     }
 
-    public ArrayList getAllowed_moves() {
-        return allowed_moves;
+    public void movePiece(int x, int y){
+        setx_coord(x);
+        setY_coord(y);
     }
-
-    public void setAllowed_moves(ArrayList<MoveTypes> allowed_moves) {
-        this.allowed_moves = allowed_moves;
-    }
-
     public boolean move_bound_check(int new_x_coord, int new_y_coord)
     {
-        if(new_x_coord > X_UPPER_BOUND || new_x_coord < X_LOWER_BOUND || new_y_coord > Y_UPPER_BOUND ||
-                new_y_coord < Y_LOWER_BOUND) return false;
-        return true;
+        return (new_x_coord <= Board.X_UPPER_BOUND && new_x_coord >= Board.X_LOWER_BOUND &&
+                new_y_coord <= Board.Y_UPPER_BOUND && new_y_coord >= Board.Y_LOWER_BOUND);
     }
 
+    public MoveType move_type_chercker(int end_x_coord, int end_y_coord)
+    {
+        if (this.x_coord == end_x_coord && this.y_coord != end_y_coord) return MoveType.HORIZONTAL;
+        if (this.x_coord != end_x_coord && this.y_coord == end_y_coord) return MoveType.VERTICAL;
+        if (this.x_coord != end_x_coord && this.y_coord != end_y_coord)
+        {
+            if (Math.abs(end_x_coord - this.x_coord) == Math.abs(end_y_coord - this.y_coord)) 
+                return MoveType.DIAGONAL;
+            if(Math.abs((x_coord + end_y_coord) - (this.x_coord + this.y_coord)) == 3) 
+                return MoveType.KNIGHT;
+        }
+        return MoveType.NO_MOVE;
+    }
+
+    public boolean horizontal_move_check(int new_x_coord, int new_y_coord)
+    {
+        
+        return true;
+    }
     public abstract boolean move_check(int new_x_coord, int new_y_coord);
+
 }
