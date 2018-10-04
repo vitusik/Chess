@@ -113,15 +113,83 @@ public class PieceTest {
             int new_y = p.getY_coord() + rand_step;
             if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
             {
-                System.out.println("failed horizontal check with x val of " + new_x + " and y val of " + new_y);
+                System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
                 break;
             }
         }
+        for(int i = 0; i < 99; i++){
+            int rand_step = rand.nextInt(5) + 1 ;
+            int new_x = p.getX_coord() - rand_step;
+            int new_y = p.getY_coord() + rand_step;
+            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            {
+                System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
+                break;
+            }
+        }
+        for(int i = 0; i < 99; i++){
+            int rand_step = rand.nextInt(5) + 1 ;
+            int new_x = p.getX_coord() - rand_step;
+            int new_y = p.getY_coord() - rand_step;
+            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            {
+                System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
+                break;
+            }
+        }
+        for(int i = 0; i < 99; i++){
+            int rand_step = rand.nextInt(5) + 1 ;
+            int new_x = p.getX_coord() + rand_step;
+            int new_y = p.getY_coord() - rand_step;
+            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            {
+                System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
+                break;
+            }
+        }
+        for(int i = 0; i < 99; i++){
+            int rand_step_x = rand.nextInt(8) - 4 ;
+            int rand_step_y = rand_step_x + 1 ;
+            int new_x = p.getX_coord() + rand_step_x;
+            int new_y = p.getY_coord() + rand_step_y;
+            if(p.move_type_checker(new_x, new_y) == MoveType.DIAGONAL)
+            {
+                System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
+                break;
+            }
+        }
+
+    }
+    public static void test5(){
+        // move type check for knight move
+        Random rand = new Random();
+        boolean fail = false;
+        for(int i = 0; i < 99; i++)
+        {
+            int x = rand.nextInt(8) + 1;
+            int y = rand.nextInt(8) + 1;
+            Piece p = new Pawn(x, y, true);
+            if(     p.move_type_checker(x - 2, y + 1) != MoveType.KNIGHT ||
+                    p.move_type_checker(x - 2, y - 1) != MoveType.KNIGHT ||
+                    p.move_type_checker(x - 1, y + 2) != MoveType.KNIGHT ||
+                    p.move_type_checker(x - 1, y - 2) != MoveType.KNIGHT ||
+                    p.move_type_checker(x + 2, y + 1) != MoveType.KNIGHT ||
+                    p.move_type_checker(x + 2, y - 1) != MoveType.KNIGHT ||
+                    p.move_type_checker(x + 1, y + 2) != MoveType.KNIGHT ||
+                    p.move_type_checker(x + 1, y - 2) != MoveType.KNIGHT )
+            {
+                System.out.println("failed knight check");
+                break;
+            }
+        }
+
+
     }
     public static void main(String[] args){
         test1();
         test2();
         test3();
         test4();
+        test5();
     }
 }

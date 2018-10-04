@@ -63,7 +63,7 @@ public abstract class Piece {
             if (Math.abs(end_x_coord - this.x_coord) == Math.abs(end_y_coord - this.y_coord)) {
                 return MoveType.DIAGONAL;
             }
-            if(Math.abs((x_coord + end_y_coord) - (this.x_coord + this.y_coord)) == 3) {
+            if(Math.abs(end_x_coord - this.x_coord) + Math.abs(end_y_coord - this.y_coord) == 3) {
                 return MoveType.KNIGHT;
             }
         }
