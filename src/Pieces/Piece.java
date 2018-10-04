@@ -70,7 +70,7 @@ public abstract class Piece {
         return MoveType.NO_MOVE;
     }
 
-    public boolean horizontal_move_check(int new_y_coord) {
+    public boolean vertical_move_check(int new_y_coord) {
         int step = (new_y_coord > this.y_coord)? 1 : -1;
         for (int i = this.y_coord + step ; i != new_y_coord; i += step)
         {
@@ -88,7 +88,7 @@ public abstract class Piece {
         }
     }
 
-    public boolean vertical_move_check(int new_x_coord) {
+    public boolean horizontal_move_check(int new_x_coord) {
         int step = (new_x_coord > this.x_coord)? 1 : -1;
         for (int i = this.x_coord + step ; i != new_x_coord; i += step)
         {

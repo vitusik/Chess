@@ -4,7 +4,7 @@ import Pieces.*;
 import java.util.Random;
 
 
-// theses tests are for the various move checks in the Piece class
+// these tests are for the various move checks in the Piece class
 public class PieceTest {
     public static void test1() {
         //bound checks
@@ -185,11 +185,22 @@ public class PieceTest {
 
 
     }
+    public static void test6(){
+        //horizontal move validity
+        Piece attacking_piece = new Pawn(0,0,Board.WHITE);
+        Piece attacked_piece = new Pawn(5,0,Board.BLACK);
+
+        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
+        System.out.println(attacking_piece.horizontal_move_check(5));
+
+    }
     public static void main(String[] args){
-        test1();
-        test2();
-        test3();
-        test4();
-        test5();
+        //test1();
+        //test2();
+        //test3();
+        //test4();
+        //test5();
+        test6();
     }
 }
