@@ -12,4 +12,10 @@ public class Board {
     public static final boolean BLACK = false;
 
     public static Piece[] board = new Piece[X_UPPER_BOUND * Y_UPPER_BOUND];
+
+    public static void clear_board(){
+        for(int i = 0; i < Board.X_UPPER_BOUND * Board.Y_UPPER_BOUND ; i++){
+            Board.board[i] = null;
+        }
+    }
 }

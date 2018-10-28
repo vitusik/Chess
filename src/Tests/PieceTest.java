@@ -6,6 +6,7 @@ import java.util.Random;
 
 // these tests are for the various move checks in the Piece class
 public class PieceTest {
+
     public static void test1() {
         //bound checks
         Piece p = new Pawn(1,1, true);
@@ -192,15 +193,50 @@ public class PieceTest {
 
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        System.out.println(attacking_piece.horizontal_move_check(5));
+        if(!attacking_piece.horizontal_move_check(5))
+        {
+            System.out.println("failed horizontal move check");
+        }
+        Board.clear_board();
+        Piece blocking_piece = new Pawn(4,0,Board.BLACK);
+        // horizontal move validity when there is a blocking piece in the path
+        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
+        Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
+        if(attacking_piece.horizontal_move_check(5))
+        {
+            System.out.println("failed horizontal move check");
+        }
+    }
+    public static void test7(){
+        //vertical move validity
+        Piece attacking_piece = new Pawn(0,0,Board.WHITE);
+        Piece attacked_piece = new Pawn(0,5,Board.BLACK);
 
+        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
+        if(!attacking_piece.vertical_move_check(5))
+        {
+            System.out.println("failed vertical move check");
+        }
+        Board.clear_board();
+        Piece blocking_piece = new Pawn(0,4,Board.BLACK);
+        // vertical move validity when there is a blocking piece in the path
+        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
+        Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
+        if(attacking_piece.vertical_move_check(5))
+        {
+            System.out.println("failed vertical move check");
+        }
     }
     public static void main(String[] args){
-        //test1();
-        //test2();
-        //test3();
-        //test4();
-        //test5();
+        test1();
+        test2();
+        test3();
+        test4();
+        test5();
         test6();
+        test7();
     }
 }
