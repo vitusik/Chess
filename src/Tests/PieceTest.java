@@ -7,7 +7,7 @@ import java.util.Random;
 // these tests are for the various move checks in the Piece class
 public class PieceTest {
 
-    public static void test1() {
+    private static void test1() {
         //bound checks
         Piece p = new Pawn(1,1, true);
         Random rand = new Random();
@@ -42,7 +42,7 @@ public class PieceTest {
         }
 
     }
-    public static void test2(){
+    private static void test2(){
         //move type checks for vertical moves
         Piece p = new Pawn(4,4,true);
         Random rand = new Random();
@@ -73,7 +73,7 @@ public class PieceTest {
             }
         }
     }
-    public static void test3(){
+    private static void test3(){
         //move type checks for horizontal moves
         Piece p = new Pawn(4,4,true);
         Random rand = new Random();
@@ -104,7 +104,7 @@ public class PieceTest {
             }
         }
     }
-    public static void test4(){
+    private static void test4(){
         // move type check for diagonal moves
         Piece p = new Pawn(4,4,true);
         Random rand = new Random();
@@ -161,10 +161,9 @@ public class PieceTest {
         }
 
     }
-    public static void test5(){
+    private static void test5(){
         // move type check for knight move
         Random rand = new Random();
-        boolean fail = false;
         for(int i = 0; i < 99; i++)
         {
             int x = rand.nextInt(8) + 1;
@@ -186,7 +185,7 @@ public class PieceTest {
 
 
     }
-    public static void test6(){
+    private static void test6(){
         //horizontal move validity
         Piece attacking_piece = new Pawn(0,0,Board.WHITE);
         Piece attacked_piece = new Pawn(5,0,Board.BLACK);
@@ -208,7 +207,7 @@ public class PieceTest {
             System.out.println("failed horizontal move check");
         }
     }
-    public static void test7(){
+    private static void test7(){
         //vertical move validity
         Piece attacking_piece = new Pawn(0,0,Board.WHITE);
         Piece attacked_piece = new Pawn(0,5,Board.BLACK);
@@ -230,7 +229,7 @@ public class PieceTest {
             System.out.println("failed vertical move check");
         }
     }
-    public static void test8(){
+    private static void test8(){
         // diagonal move validity
         Piece attacking_piece = new Pawn(0,0,Board.WHITE);
         Piece attacked_piece = new Pawn(5,5,Board.BLACK);
