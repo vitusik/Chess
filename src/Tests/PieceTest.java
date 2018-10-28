@@ -230,6 +230,27 @@ public class PieceTest {
             System.out.println("failed vertical move check");
         }
     }
+    public static void test8(){
+        // diagonal move validity
+        Piece attacking_piece = new Pawn(0,0,Board.WHITE);
+        Piece attacked_piece = new Pawn(5,5,Board.BLACK);
+
+        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
+        if(!attacking_piece.diagonal_move_check(5,5))
+        {
+            System.out.println("failed diagonal move check");
+        }
+        Board.clear_board();
+        Piece blocking_piece = new Pawn(2,2,Board.BLACK);
+        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
+        Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
+        if(attacking_piece.diagonal_move_check(5,5))
+        {
+            System.out.println("failed diagonal move check");
+        }
+    }
     public static void main(String[] args){
         test1();
         test2();
@@ -238,5 +259,6 @@ public class PieceTest {
         test5();
         test6();
         test7();
+        test8();
     }
 }
