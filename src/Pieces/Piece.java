@@ -46,12 +46,12 @@ public abstract class Piece {
         setY_coord(y);
     }
 
-    public boolean move_bound_check(int new_x_coord, int new_y_coord) {
+    private boolean move_bound_check(int new_x_coord, int new_y_coord) {
         return (new_x_coord <= Board.X_UPPER_BOUND && new_x_coord >= Board.X_LOWER_BOUND &&
                 new_y_coord <= Board.Y_UPPER_BOUND && new_y_coord >= Board.Y_LOWER_BOUND);
     }
 
-    public MoveType move_type_checker(int end_x_coord, int end_y_coord) {
+    private MoveType move_type_checker(int end_x_coord, int end_y_coord) {
         if (this.x_coord != end_x_coord && this.y_coord == end_y_coord) {
             return MoveType.HORIZONTAL;
         }
@@ -70,7 +70,7 @@ public abstract class Piece {
         return MoveType.NO_MOVE;
     }
 
-    public boolean vertical_move_check(int new_y_coord) {
+    private boolean vertical_move_check(int new_y_coord) {
         int step = (new_y_coord > this.y_coord)? 1 : -1;
         for (int i = this.y_coord + step ; i != new_y_coord; i += step)
         {
@@ -88,7 +88,7 @@ public abstract class Piece {
         }
     }
 
-    public boolean horizontal_move_check(int new_x_coord) {
+    private boolean horizontal_move_check(int new_x_coord) {
         int step = (new_x_coord > this.x_coord)? 1 : -1;
         for (int i = this.x_coord + step ; i != new_x_coord; i += step)
         {
@@ -106,7 +106,7 @@ public abstract class Piece {
         }
     }
 
-    public boolean diagonal_move_check(int new_x_coord, int new_y_coord) {
+    private boolean diagonal_move_check(int new_x_coord, int new_y_coord) {
         int step_x = (new_x_coord > this.x_coord)? 1 : -1;
         int step_y = (new_y_coord > this.y_coord)? 1 : -1;
         int j = this.y_coord + step_y;
@@ -127,6 +127,40 @@ public abstract class Piece {
         }
     }
 
-    public abstract boolean move_check(int new_x_coord, int new_y_coord);
+    private boolean knight_move_check(int new_x_coord, int new_y_coord) {
+        return this.getPlayer() != Board.board[new_x_coord + new_y_coord * Board.X_UPPER_BOUND].getPlayer();
+    }
+
+    public abstract boolean spesific_piece_move_check(int new_x_coord, int new_y_coord, MoveType move_type);
+
+    public boolean move_check(int new_x_coord, int new_y_coord){
+        MoveType cur_move = this.move_type_checker(new_x_coord, new_y_coord);
+        boolean valid_move = false;
+        if(!this.move_bound_check(new_x_coord, new_y_coord))
+        {
+            return false;
+        }
+        if(!this.allowed_moves.contains(cur_move))
+        {
+            return false;
+        }
+        switch (cur_move){
+            case HORIZONTAL:
+                valid_move = this.horizontal_move_check(new_x_coord);
+                break;
+            case VERTICAL:
+                valid_move = this.vertical_move_check(new_y_coord);
+                break;
+            case DIAGONAL:
+                valid_move = this.diagonal_move_check(new_x_coord, new_y_coord);
+                break;
+            case KNIGHT:
+                valid_move = this.knight_move_check(new_x_coord, new_y_coord);
+                break;
+            case NO_MOVE:
+                break;
+        }
+        return valid_move;
+    }
 
 }

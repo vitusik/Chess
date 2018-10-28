@@ -6,7 +6,7 @@ import java.util.Random;
 
 // these tests are for the various move checks in the Piece class
 public class PieceTest {
-
+/* in order for the tests to work, change access modifier of the check move methods in the Piece class
     private static void test1() {
         //bound checks
         Piece p = new Pawn(1,1, true);
@@ -250,7 +250,9 @@ public class PieceTest {
             System.out.println("failed diagonal move check");
         }
     }
+    */
     public static void main(String[] args){
+    /*
         test1();
         test2();
         test3();
@@ -259,5 +261,6 @@ public class PieceTest {
         test6();
         test7();
         test8();
+        */
     }
 }
