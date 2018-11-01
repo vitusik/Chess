@@ -6,7 +6,7 @@ import java.util.Random;
 
 // these tests are for the various move checks in the Piece class
 public class PieceTest {
-/* in order for the tests to work, change access modifier of the check move methods in the Piece class
+    /* in order for the tests to work, change access modifier of the check move methods in the Piece class to public
     private static void test1() {
         //bound checks
         Piece p = new Pawn(1,1, true);
