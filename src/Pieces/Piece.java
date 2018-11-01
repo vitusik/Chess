@@ -2,14 +2,20 @@ package Pieces;
 import Board.Board;
 import java.util.ArrayList;
 
-public abstract class Piece {
 
+public abstract class Piece {
 
     private int x_coord;
     private int y_coord;
     private boolean player;
     protected ArrayList<MoveType> allowed_moves;
 
+    /**
+     * Piece Class constructor
+     * @param x the column of the piece on the chess board receives values of 0-7
+     * @param y the row of the piece on the chess board receives values of 0-7
+     * @param p boolean parameter which represents the color of the player true for white player, false for black
+     */
     public Piece(int x, int y, boolean p) {
         x_coord = x;
         y_coord = y;
@@ -17,41 +23,73 @@ public abstract class Piece {
         allowed_moves = new ArrayList<>();
     }
 
+    /**
+     * x coordinate getter
+     * @return the x coordinate of the piece
+     */
     public int getX_coord() {
         return x_coord;
     }
 
+    /**
+     * x coordinate setter
+     * @param x_coord the new x coordinate of the piece
+     */
     public void setX_coord(int x_coord) {
         this.x_coord = x_coord;
     }
-
+    /**
+     * y coordinate getter
+     * @return the y coordinate of the piece
+     */
     public int getY_coord() {
         return y_coord;
     }
-
+    /**
+     * y coordinate setter
+     * @param y_coord the new y coordinate of the piece
+     */
     public void setY_coord(int y_coord) {
         this.y_coord = y_coord;
     }
 
+    /**
+     * player type getter
+     * @return a boolean value which represents the type of the player
+     */
     public boolean getPlayer() {
         return player;
     }
 
+    /**
+     * player type setter
+     * @param player boolean which represents the type of the player
+     */
     public void setPlayer(boolean player) {
         this.player = player;
     }
 
-    public void setXY_coords(int x, int y){
-        setX_coord(x);
-        setY_coord(y);
+    /**
+     * method which checks if the given (x,y) coordinate is within the bounds of the board
+     * @param x_coord
+     * @param y_coord
+     * @return true if the coordinate is in bounds
+     */
+    public boolean bound_check(int x_coord, int y_coord) {
+        // the x,y coordinates ranges between 0 and 7 in the board array and because of that they need to be adjusted
+        return (x_coord + 1 <= Board.X_UPPER_BOUND && x_coord + 1 >= Board.X_LOWER_BOUND &&
+                y_coord + 1 <= Board.Y_UPPER_BOUND && y_coord + 1 >= Board.Y_LOWER_BOUND);
     }
 
-    protected boolean move_bound_check(int new_x_coord, int new_y_coord) {
-        return (new_x_coord <= Board.X_UPPER_BOUND && new_x_coord >= Board.X_LOWER_BOUND &&
-                new_y_coord <= Board.Y_UPPER_BOUND && new_y_coord >= Board.Y_LOWER_BOUND);
-    }
-
-    protected MoveType move_type_checker(int end_x_coord, int end_y_coord) {
+    /**
+     * method which takes new (x,y) position and returns the type of move that can be made from the current position
+     * to get to the new position
+     * @param end_x_coord the new x coordinate of the piece
+     * @param end_y_coord the new y coordinate of the piece
+     * @return returns a MoveType enum member, which represents horizontal, vertical, diagonal or knight move, or an
+     * illegal move
+     */
+    public MoveType move_type_checker(int end_x_coord, int end_y_coord) {
         if (this.x_coord != end_x_coord && this.y_coord == end_y_coord) {
             return MoveType.HORIZONTAL;
         }
@@ -63,6 +101,9 @@ public abstract class Piece {
             if (Math.abs(end_x_coord - this.x_coord) == Math.abs(end_y_coord - this.y_coord)) {
                 return MoveType.DIAGONAL;
             }
+            // knight move creates a circle around the knight with the radius of 3, excluding horizontal, vertical and
+            // diagonal positions on the circle relative to the knight
+            // at this point of execution horizontal, vertical and vertical moves have been excluded
             if(Math.abs(end_x_coord - this.x_coord) + Math.abs(end_y_coord - this.y_coord) == 3) {
                 return MoveType.KNIGHT;
             }
@@ -70,7 +111,13 @@ public abstract class Piece {
         return MoveType.NO_MOVE;
     }
 
-    protected boolean vertical_move_check(int new_y_coord) {
+    /**
+     * method which checks validity of a vertical move which ends at (current x coordinate, new_y_coord)
+     * @param new_y_coord the end y coordinate of the vertical move
+     * @return true if the move is legal, meaning there aren't any blocking pieces in the way, and that at the end
+     * position there is an enemy piece or empty cell
+     */
+    private boolean vertical_move_check(int new_y_coord) {
         int step = (new_y_coord > this.y_coord)? 1 : -1;
         for (int i = this.y_coord + step ; i != new_y_coord; i += step)
         {
@@ -88,7 +135,13 @@ public abstract class Piece {
         }
     }
 
-    protected boolean horizontal_move_check(int new_x_coord) {
+    /**
+     * method which checks validity of a horizontal move which ends at (new_x_coord, current y coordinate)
+     * @param new_x_coord the end x coordinate of the horizontal move
+     * @return true if the move is legal, meaning there aren't any blocking pieces in the way, and that at the end
+     * position there is an enemy piece or empty cell
+     */
+    private boolean horizontal_move_check(int new_x_coord) {
         int step = (new_x_coord > this.x_coord)? 1 : -1;
         for (int i = this.x_coord + step ; i != new_x_coord; i += step)
         {
@@ -106,7 +159,14 @@ public abstract class Piece {
         }
     }
 
-    protected boolean diagonal_move_check(int new_x_coord, int new_y_coord) {
+    /**
+     * method which checks validity of a diagonal move which ends at (new_x_coord, new_y_coord)
+     * @param new_x_coord the end x coordinate of the diagonal move
+     * @param new_y_coord the end y coordinate of the diagonal move
+     * @return true if the move is legal, meaning there aren't any blocking pieces in the way, and that at the end
+     * position there is an enemy piece or empty cell
+     */
+    private boolean diagonal_move_check(int new_x_coord, int new_y_coord) {
         int step_x = (new_x_coord > this.x_coord)? 1 : -1;
         int step_y = (new_y_coord > this.y_coord)? 1 : -1;
         int j = this.y_coord + step_y;
@@ -127,14 +187,27 @@ public abstract class Piece {
         }
     }
 
+    /**
+     * method which checks the validity of a knight type move
+     * @param new_x_coord the end x coordinate of the diagonal move
+     * @param new_y_coord the end y coordinate of the diagonal move
+     * @return true if there is an enemy piece at the end position or an empty cell
+     */
     private boolean knight_move_check(int new_x_coord, int new_y_coord) {
         return this.getPlayer() != Board.board[new_x_coord + new_y_coord * Board.X_UPPER_BOUND].getPlayer();
     }
 
+    /**
+     * method which encapsulates all the previous methods and call the correct move validity check method
+     * @param new_x_coord the end x coordinate of the move
+     * @param new_y_coord the end y coordinate of the move
+     * @return true if the move is legal, meaning its not out of bounds, the calling piece can make that type of move
+     * and the move is valid
+     */
     public boolean move_check(int new_x_coord, int new_y_coord){
         MoveType cur_move = this.move_type_checker(new_x_coord, new_y_coord);
         boolean valid_move = false;
-        if(!this.move_bound_check(new_x_coord, new_y_coord))
+        if(!this.bound_check(new_x_coord, new_y_coord))
         {
             return false;
         }
