@@ -32,27 +32,27 @@ public class Board {
 
     @Override
     public String toString() {
-        String board_string = "";
-        board_string = board_string + (new String(new char [49]).replace("\0","*"));
-        board_string = board_string + "\n";
+        StringBuilder board_string = new StringBuilder();
+        board_string.append(new String(new char [49]).replace("\0","*"));
+        board_string.append("\n");
         for(int y = 0; y < Y_UPPER_BOUND; y++)
         {
-            board_string = board_string + "*";
+            board_string.append("*");
             for (int x = 0; x < X_UPPER_BOUND; x++)
             {
                 Piece p = Board.board[x + y * X_UPPER_BOUND];
                 if(p != null)
                 {
-                    board_string = board_string + "  "+ p + " " + (p.toString().length() == 1? " ":"");
+                    board_string.append("  ").append(p).append(" ").append((p.toString().length() == 1? " ":""));
                 }
                 else
                 {
-                    board_string = board_string + "     ";
+                    board_string.append("     ");
                 }
-                board_string = board_string + "*";
+                board_string.append("*");
             }
-            board_string = board_string + "\n" + (new String(new char [49]).replace("\0","*")) + "\n";
+            board_string.append("\n").append((new String(new char [49]).replace("\0","*"))).append("\n");
         }
-        return board_string;
+        return board_string.toString();
     }
 }
