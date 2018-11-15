@@ -11,6 +11,11 @@ public class King extends Piece {
     }
 
     @Override
+    public String toString() {
+        return "K";
+    }
+
+    @Override
     public boolean move_check(int new_x_coord, int new_y_coord) {
         /*
             1. after each move check to see that the king is not threatened by an enemy piece

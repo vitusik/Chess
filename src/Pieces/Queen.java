@@ -7,4 +7,9 @@ public class Queen extends  Piece {
         allowed_moves.add(MoveType.VERTICAL);
         allowed_moves.add(MoveType.DIAGONAL);
     }
+
+    @Override
+    public String toString() {
+        return "Q";
+    }
 }

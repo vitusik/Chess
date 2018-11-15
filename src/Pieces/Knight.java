@@ -5,4 +5,9 @@ public class Knight extends Piece {
         super(x, y, p);
         allowed_moves.add(MoveType.KNIGHT);
     }
+
+    @Override
+    public String toString() {
+        return "K";
+    }
 }

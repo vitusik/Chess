@@ -7,4 +7,8 @@ public class Rook extends Piece{
         allowed_moves.add(MoveType.VERTICAL);
     }
 
+    @Override
+    public String toString() {
+        return "R";
+    }
 }

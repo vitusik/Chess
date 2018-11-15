@@ -14,6 +14,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public String toString() {
+        return "P";
+    }
+
+    @Override
     public boolean move_check(int new_x_coord, int new_y_coord) {
         /*
         white player can only go up, so his cur y coordinate is higher than the new one 

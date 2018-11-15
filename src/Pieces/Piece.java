@@ -1,5 +1,7 @@
 package Pieces;
 import Board.Board;
+import jdk.internal.util.xml.impl.Pair;
+
 import java.util.ArrayList;
 
 
@@ -9,6 +11,9 @@ public abstract class Piece {
     private int y_coord;
     private boolean player;
     protected ArrayList<MoveType> allowed_moves;
+
+    @Override
+    public abstract String toString();
 
     /**
      * Piece Class constructor
