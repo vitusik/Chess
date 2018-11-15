@@ -10,6 +10,7 @@ public abstract class Piece {
     private int x_coord;
     private int y_coord;
     private boolean player;
+    private boolean in_starting_pos;
     protected ArrayList<MoveType> allowed_moves;
 
     @Override
@@ -19,15 +20,15 @@ public abstract class Piece {
      * Piece Class constructor
      * @param x the column of the piece on the chess board receives values of 0-7
      * @param y the row of the piece on the chess board receives values of 0-7
-     * @param p boolean parameter which represents the color of the player true for white player, false for black
+     * @param p boolean parameter which represents the color of the player true for black player, false for white
      */
     public Piece(int x, int y, boolean p) {
         x_coord = x;
         y_coord = y;
         player = p;
         allowed_moves = new ArrayList<>();
+        in_starting_pos = true;
     }
-
     /**
      * x coordinate getter
      * @return the x coordinate of the piece
@@ -72,6 +73,14 @@ public abstract class Piece {
      */
     public void setPlayer(boolean player) {
         this.player = player;
+    }
+
+    public boolean isIn_starting_pos() {
+        return in_starting_pos;
+    }
+
+    public void setIn_starting_pos(boolean in_starting_pos) {
+        this.in_starting_pos = in_starting_pos;
     }
 
     /**
@@ -236,6 +245,7 @@ public abstract class Piece {
             case NO_MOVE:
                 break;
         }
+        if (valid_move && in_starting_pos) in_starting_pos = false;
         return valid_move;
     }
 

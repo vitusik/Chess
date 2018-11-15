@@ -59,6 +59,8 @@ public class PawnTest {
 
     }
     public static void main(String[] args){
+        Board.board_init();
+        Board.clear_board();
         for (int i = 0; i< 100;i++)
         {
             test1();
