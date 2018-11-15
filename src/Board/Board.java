@@ -30,8 +30,8 @@ public class Board {
         }
     }
 
-    @Override
-    public String toString() {
+    public static void print_board()
+    {
         StringBuilder board_string = new StringBuilder();
         board_string.append(new String(new char [49]).replace("\0","*"));
         board_string.append("\n");
@@ -53,6 +53,6 @@ public class Board {
             }
             board_string.append("\n").append((new String(new char [49]).replace("\0","*"))).append("\n");
         }
-        return board_string.toString();
+        System.out.println(board_string);
     }
 }
