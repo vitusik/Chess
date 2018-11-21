@@ -6,45 +6,47 @@ import java.util.Random;
 
 // these tests are for the various move checks in the Piece class
 public class PieceTest {
-    /* in order for the tests to work, change access modifier of the check move methods in the Piece class to public
     private static void test1() {
         //bound checks
-        Piece p = new Pawn(1,1, true);
+        Piece p = new Queen(1,1, true);
         Random rand = new Random();
-        // random x,y valuess in the range of [1,8] - meaning legal moves
-        for(int i = 0; i  < 99; i++){
-            int rand_x = rand.nextInt(8) + 1;
-            int rand_y = rand.nextInt(8) + 1;
-            if(!p.move_bound_check(rand_x, rand_y)){
+        // random x,y values in the range of [1,8] - meaning legal moves
+        for(int i = 0; i  < 99;){
+            int rand_x = rand.nextInt(8);
+            int rand_y = rand.nextInt(8);
+            if(!p.move_check(rand_x, rand_y ) && (MoveType.NO_MOVE != p.move_type_checker(rand_x, rand_y) && MoveType.KNIGHT != p.move_type_checker(rand_x, rand_y))){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
+            else i++;
         }
         // random x,y values in the range of [9,108] - meaning illegal moves
-        for(int i = 0; i  < 99; i++){
+        for(int i = 0; i  < 99;){
             int rand_x = rand.nextInt(100) + 9;
             int rand_y = rand.nextInt(100) + 9;
-            if(p.move_bound_check(rand_x, rand_y)){
+            if(p.move_check(rand_x, rand_y) && (MoveType.NO_MOVE != p.move_type_checker(rand_x, rand_y) && MoveType.KNIGHT != p.move_type_checker(rand_x, rand_y))){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
+            else i++;
         }
         // random x,y values in the range of [-100,-1] - meaning illegal moves
-        for(int i = 0; i  < 99; i++){
+        for(int i = 0; i  < 99;){
             int rand_x = rand.nextInt(100) + 1;
             rand_x = rand_x * -1;
             int rand_y = rand.nextInt(100) + 1;
             rand_y = rand_y * -1;
-            if(p.move_bound_check(rand_x, rand_y)){
+            if(p.move_check(rand_x, rand_y) && (MoveType.NO_MOVE != p.move_type_checker(rand_x, rand_y) && MoveType.KNIGHT != p.move_type_checker(rand_x, rand_y))){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
+            else i++;
         }
 
     }
     private static void test2(){
         //move type checks for vertical moves
-        Piece p = new Pawn(4,4,true);
+        Piece p = new Rook(4,4,true);
         Random rand = new Random();
         for( int i = 0; i < 99; i++)
         {
@@ -75,7 +77,7 @@ public class PieceTest {
     }
     private static void test3(){
         //move type checks for horizontal moves
-        Piece p = new Pawn(4,4,true);
+        Piece p = new Rook(4,4,true);
         Random rand = new Random();
         for( int i = 0; i < 99; i++)
         {
@@ -106,7 +108,7 @@ public class PieceTest {
     }
     private static void test4(){
         // move type check for diagonal moves
-        Piece p = new Pawn(4,4,true);
+        Piece p = new Bishop(4,4,true);
         Random rand = new Random();
         for(int i = 0; i < 99; i++){
             int rand_step = rand.nextInt(5) + 1 ;
@@ -168,7 +170,7 @@ public class PieceTest {
         {
             int x = rand.nextInt(8) + 1;
             int y = rand.nextInt(8) + 1;
-            Piece p = new Pawn(x, y, true);
+            Piece p = new Knight(x, y, true);
             if(     p.move_type_checker(x - 2, y + 1) != MoveType.KNIGHT ||
                     p.move_type_checker(x - 2, y - 1) != MoveType.KNIGHT ||
                     p.move_type_checker(x - 1, y + 2) != MoveType.KNIGHT ||
@@ -187,12 +189,12 @@ public class PieceTest {
     }
     private static void test6(){
         //horizontal move validity
-        Piece attacking_piece = new Pawn(0,0,Board.WHITE);
-        Piece attacked_piece = new Pawn(5,0,Board.BLACK);
+        Piece attacking_piece = new Rook(0,0,Board.WHITE);
+        Piece attacked_piece = new Rook(5,0,Board.BLACK);
 
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        if(!attacking_piece.horizontal_move_check(5))
+        if(!attacking_piece.move_check(5, 0))
         {
             System.out.println("failed horizontal move check");
         }
@@ -202,19 +204,19 @@ public class PieceTest {
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
         Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
-        if(attacking_piece.horizontal_move_check(5))
+        if(attacking_piece.move_check(5, 0))
         {
             System.out.println("failed horizontal move check");
         }
     }
     private static void test7(){
         //vertical move validity
-        Piece attacking_piece = new Pawn(0,0,Board.WHITE);
-        Piece attacked_piece = new Pawn(0,5,Board.BLACK);
+        Piece attacking_piece = new Rook(0,0,Board.WHITE);
+        Piece attacked_piece = new Rook(0,5,Board.BLACK);
 
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        if(!attacking_piece.vertical_move_check(5))
+        if(!attacking_piece.move_check(0,5))
         {
             System.out.println("failed vertical move check");
         }
@@ -224,19 +226,19 @@ public class PieceTest {
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
         Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
-        if(attacking_piece.vertical_move_check(5))
+        if(attacking_piece.move_check(0,5))
         {
             System.out.println("failed vertical move check");
         }
     }
     private static void test8(){
         // diagonal move validity
-        Piece attacking_piece = new Pawn(0,0,Board.WHITE);
-        Piece attacked_piece = new Pawn(5,5,Board.BLACK);
+        Piece attacking_piece = new Queen(0,0,Board.WHITE);
+        Piece attacked_piece = new Queen(5,5,Board.BLACK);
 
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        if(!attacking_piece.diagonal_move_check(5,5))
+        if(!attacking_piece.move_check(5,5))
         {
             System.out.println("failed diagonal move check");
         }
@@ -245,14 +247,12 @@ public class PieceTest {
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
         Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
         Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
-        if(attacking_piece.diagonal_move_check(5,5))
+        if(attacking_piece.move_check(5,5))
         {
             System.out.println("failed diagonal move check");
         }
     }
-    */
     public static void main(String[] args){
-    /*
         test1();
         test2();
         test3();
@@ -261,6 +261,5 @@ public class PieceTest {
         test6();
         test7();
         test8();
-        */
     }
 }
