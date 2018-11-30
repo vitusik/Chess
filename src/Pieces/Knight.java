@@ -1,7 +1,7 @@
 package Pieces;
 
 public class Knight extends Piece {
-    public Knight(int x, int y, boolean p){
+    Knight(int x, int y, boolean p){
         super(x, y, p);
         allowed_moves.add(MoveType.KNIGHT);
     }

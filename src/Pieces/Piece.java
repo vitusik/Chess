@@ -1,6 +1,5 @@
 package Pieces;
 import Board.Board;
-import jdk.internal.util.xml.impl.Pair;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,7 @@ public abstract class Piece {
     private int y_coord;
     private boolean color;
     private boolean in_starting_pos;
-    protected ArrayList<MoveType> allowed_moves;
+    ArrayList<MoveType> allowed_moves;
 
     @Override
     public abstract String toString();
@@ -75,21 +74,21 @@ public abstract class Piece {
         this.color = player;
     }
 
-    public boolean isIn_starting_pos() {
+    boolean isIn_starting_pos() {
         return in_starting_pos;
     }
 
-    public void setIn_starting_pos(boolean in_starting_pos) {
+    void setIn_starting_pos(boolean in_starting_pos) {
         this.in_starting_pos = in_starting_pos;
     }
 
     /**
      * method which checks if the given (x,y) coordinate is within the bounds of the board
-     * @param x_coord
-     * @param y_coord
+     * @param x_coord the x coordinate
+     * @param y_coord the y coordinate
      * @return true if the coordinate is in bounds
      */
-    public boolean bound_check(int x_coord, int y_coord) {
+    boolean bound_check(int x_coord, int y_coord) {
         // the x,y coordinates ranges between 0 and 7 in the board array and because of that they need to be adjusted
         return (x_coord + 1 <= Board.X_UPPER_BOUND && x_coord + 1 >= Board.X_LOWER_BOUND &&
                 y_coord + 1 <= Board.Y_UPPER_BOUND && y_coord + 1 >= Board.Y_LOWER_BOUND);

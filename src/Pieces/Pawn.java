@@ -6,7 +6,7 @@ import Board.Board;
 public class Pawn extends Piece {
 
 
-    public Pawn(int x, int y, boolean p) {
+    Pawn(int x, int y, boolean p) {
         super(x, y, p);
         allowed_moves.add(MoveType.DIAGONAL);
         allowed_moves.add(MoveType.VERTICAL);

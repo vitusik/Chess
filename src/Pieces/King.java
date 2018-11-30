@@ -3,7 +3,7 @@ package Pieces;
 import Board.*;
 
 public class King extends Piece {
-    public King(int x, int y, boolean p){
+    King(int x, int y, boolean p){
         super(x, y, p);
         allowed_moves.add(MoveType.HORIZONTAL);
         allowed_moves.add(MoveType.VERTICAL);
