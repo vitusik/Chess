@@ -48,9 +48,9 @@ public class Board {
         StringBuilder board_string = new StringBuilder();
         board_string.append(new String(new char [seperatorLen]).replace("\0","*"));
         board_string.append("\n");
-        for(int y = 0; y < Y_UPPER_BOUND; y++)
+        for(int y = Y_UPPER_BOUND - 1; y >= 0; y--)
         {
-            board_string.append(8-y).append(" ");
+            board_string.append(y + 1).append(" ");
             board_string.append("*");
             for (int x = 0; x < X_UPPER_BOUND; x++)
             {
@@ -75,4 +75,5 @@ public class Board {
         board_string.append("*");
         System.out.println(board_string);
     }
+
 }
