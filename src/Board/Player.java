@@ -11,6 +11,36 @@ public class Player {
     private int king_x_coord;
     private int king_y_coord;
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public int getKing_x_coord() {
+        return king_x_coord;
+    }
+
+    public void setKing_x_coord(int king_x_coord) {
+        this.king_x_coord = king_x_coord;
+    }
+
+    public int getKing_y_coord() {
+        return king_y_coord;
+    }
+
+    public void setKing_y_coord(int king_y_coord) {
+        this.king_y_coord = king_y_coord;
+    }
+
+    public void setKing_x_y_coord(int x, int y)
+    {
+        this.setKing_x_coord(x);
+        this.setKing_y_coord(y);
+    }
+
     public Player(boolean color) {
         this.color = color;
         this.checked = false;
@@ -25,7 +55,7 @@ public class Player {
     }
 
     public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
-
+        if (possible_threats == null) return false;
         for(Piece piece : possible_threats)
         {
             if(piece.move_check(x, y))
