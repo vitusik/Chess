@@ -24,7 +24,7 @@ public class Player {
         return this.piece_list;
     }
 
-    public boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
+    public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
 
         for(Piece piece : possible_threats)
         {
