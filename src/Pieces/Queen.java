@@ -1,7 +1,7 @@
 package Pieces;
 
 public class Queen extends  Piece {
-    Queen(int x, int y, boolean p){
+    public Queen(int x, int y, boolean p){
         super(x, y, p);
         allowed_moves.add(MoveType.HORIZONTAL);
         allowed_moves.add(MoveType.VERTICAL);
