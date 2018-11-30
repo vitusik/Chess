@@ -21,6 +21,8 @@ public class Board {
         for(int i = 0; i < Board.X_UPPER_BOUND * Board.Y_UPPER_BOUND ; i++){
             Board.board[i] = null;
         }
+        white_player.setPiece_list(null);
+        black_player.setPiece_list(null);
     }
 
     public static void board_init() {
