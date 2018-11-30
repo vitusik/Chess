@@ -1,5 +1,5 @@
 package Pieces;
-import Board.Board;
+import Board.*;
 
 import java.util.ArrayList;
 
@@ -58,6 +58,11 @@ public abstract class Piece {
         this.y_coord = y_coord;
     }
 
+    public void setXYcoord(int x, int y)
+    {
+        this.setX_coord(x);
+        this.setY_coord(y);
+    }
     /**
      * player type getter
      * @return a boolean value which represents the type of the player
@@ -210,6 +215,27 @@ public abstract class Piece {
         return this.getColor() != Board.board[new_x_coord + new_y_coord * Board.X_UPPER_BOUND].getColor();
     }
 
+
+    boolean make_move_and_update(int new_x_coord, int new_y_coord){
+        Piece piece_in_final_positon = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
+        Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = this;
+        int cur_x = this.getX_coord();
+        int cur_y = this.getY_coord();
+        Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = null;
+        this.setXYcoord(new_x_coord, new_y_coord);
+        int king_x = this.color? Board.black_player.getKing_x_coord() : Board.white_player.getKing_x_coord();
+        int king_y = this.color? Board.black_player.getKing_y_coord() : Board.white_player.getKing_y_coord();
+        ArrayList<Piece> threats = this.color? Board.white_player.getPiece_list(): Board.black_player.getPiece_list();
+        if(Player.is_under_threat(king_x, king_y, threats))
+        {
+            this.setXYcoord(cur_x, cur_y);
+            Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = this;
+            Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = piece_in_final_positon;
+            return false;
+        }
+        return true;
+
+    }
     /**
      * method which encapsulates all the previous methods and call the correct move validity check method
      * @param new_x_coord the end x coordinate of the move
@@ -245,6 +271,10 @@ public abstract class Piece {
                 break;
         }
         if (valid_move && in_starting_pos) in_starting_pos = false;
+        if (valid_move)
+        {
+            valid_move = this.make_move_and_update(new_x_coord, new_y_coord);
+        }
         return valid_move;
     }
 
