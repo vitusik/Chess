@@ -23,7 +23,8 @@ public class Pawn extends Piece {
         white player can only go up, so his cur y coordinate is lower than the new one
         the black player is the exact opposite
         white player is boolean false, black is boolean true
-         */ 
+         */
+        boolean valid_move = false;
         boolean cur_move_valid_dir = (new_y_coord < this.getY_coord() == this.getColor());
         MoveType moveType = move_type_checker(new_x_coord, new_y_coord);
         if(!bound_check(new_x_coord,new_y_coord))
@@ -49,7 +50,8 @@ public class Pawn extends Piece {
                         if(temp == null)
                         {
                             this.setIn_starting_pos(false);
-                            return true;
+                            valid_move = true;
+                            break;
                         }
                         else return false;
                     }
@@ -60,7 +62,8 @@ public class Pawn extends Piece {
                         {
                             this.setIn_starting_pos(false);
                         }
-                        return true;
+                        valid_move = true;
+                        break;
                     }
                     else return false;
                 }
@@ -77,7 +80,8 @@ public class Pawn extends Piece {
                         {
                             this.setIn_starting_pos(false);
                         }
-                        return true;
+                        valid_move = true;
+                        break;
                     }
                     else return false;
                 }
@@ -86,5 +90,10 @@ public class Pawn extends Piece {
             default:
                 return false;
         }
+        if(valid_move)
+        {
+            valid_move = this.make_move_and_update(new_x_coord, new_y_coord);
+        }
+        return valid_move;
     }
 }
