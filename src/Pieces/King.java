@@ -2,8 +2,6 @@ package Pieces;
 
 import Board.*;
 
-import java.util.ArrayList;
-
 public class King extends Piece {
     public King(int x, int y, boolean p){
         super(x, y, p);
@@ -57,6 +55,4 @@ public class King extends Piece {
         }
         return false;
     }
-
-
 }
