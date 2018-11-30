@@ -9,7 +9,7 @@ public abstract class Piece {
 
     private int x_coord;
     private int y_coord;
-    private boolean player;
+    private boolean color;
     private boolean in_starting_pos;
     protected ArrayList<MoveType> allowed_moves;
 
@@ -20,12 +20,12 @@ public abstract class Piece {
      * Piece Class constructor
      * @param x the column of the piece on the chess board receives values of 0-7
      * @param y the row of the piece on the chess board receives values of 0-7
-     * @param p boolean parameter which represents the color of the player true for black player, false for white
+     * @param c boolean parameter which represents the color of the player true for black player, false for white
      */
-    public Piece(int x, int y, boolean p) {
+    public Piece(int x, int y, boolean c) {
         x_coord = x;
         y_coord = y;
-        player = p;
+        color = c;
         allowed_moves = new ArrayList<>();
         in_starting_pos = true;
     }
@@ -63,16 +63,16 @@ public abstract class Piece {
      * player type getter
      * @return a boolean value which represents the type of the player
      */
-    public boolean getPlayer() {
-        return player;
+    public boolean getColor() {
+        return color;
     }
 
     /**
      * player type setter
      * @param player boolean which represents the type of the player
      */
-    public void setPlayer(boolean player) {
-        this.player = player;
+    public void setColor(boolean player) {
+        this.color = player;
     }
 
     public boolean isIn_starting_pos() {
@@ -145,7 +145,7 @@ public abstract class Piece {
         } else
         {
             Piece temp = Board.board[this.x_coord + Board.X_UPPER_BOUND * new_y_coord];
-            return temp.getPlayer() != this.getPlayer();
+            return temp.getColor() != this.getColor();
         }
     }
 
@@ -169,7 +169,7 @@ public abstract class Piece {
         } else
         {
             Piece temp = Board.board[new_x_coord + Board.X_UPPER_BOUND * this.y_coord];
-            return temp.getPlayer() != this.getPlayer();
+            return temp.getColor() != this.getColor();
         }
     }
 
@@ -197,7 +197,7 @@ public abstract class Piece {
         } else
         {
             Piece temp = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
-            return temp.getPlayer() != this.getPlayer();
+            return temp.getColor() != this.getColor();
         }
     }
 
@@ -208,7 +208,7 @@ public abstract class Piece {
      * @return true if there is an enemy piece at the end position or an empty cell
      */
     private boolean knight_move_check(int new_x_coord, int new_y_coord) {
-        return this.getPlayer() != Board.board[new_x_coord + new_y_coord * Board.X_UPPER_BOUND].getPlayer();
+        return this.getColor() != Board.board[new_x_coord + new_y_coord * Board.X_UPPER_BOUND].getColor();
     }
 
     /**

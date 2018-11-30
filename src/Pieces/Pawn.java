@@ -24,7 +24,7 @@ public class Pawn extends Piece {
         the black player is the exact opposite
         white player is boolean false, black is boolean true
          */ 
-        boolean cur_move_valid_dir = (new_y_coord < this.getY_coord() == this.getPlayer());
+        boolean cur_move_valid_dir = (new_y_coord < this.getY_coord() == this.getColor());
         MoveType moveType = move_type_checker(new_x_coord, new_y_coord);
         if(!bound_check(new_x_coord,new_y_coord))
         {
@@ -44,7 +44,7 @@ public class Pawn extends Piece {
                     {
                         // pawn cannot jump over another piece when making a 2 step move, so we need to check
                         // that the cell between the cur position and the final position is empty
-                        int y_dir = this.getPlayer()? -1:1;
+                        int y_dir = this.getColor()? -1:1;
                         Piece temp = Board.board[new_x_coord + Board.X_UPPER_BOUND * (new_y_coord + y_dir)];
                         if(temp == null)
                         {
@@ -69,7 +69,7 @@ public class Pawn extends Piece {
             case DIAGONAL:
                 // a diagonal move is an attacking only move
                 Piece attacked_piece = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
-                if(attacked_piece != null && attacked_piece.getPlayer() != this.getPlayer())
+                if(attacked_piece != null && attacked_piece.getColor() != this.getColor())
                 {
                     if (Math.abs(this.getY_coord() - new_y_coord) == 1 && Math.abs(this.getX_coord() - new_x_coord) == 1)
                     {
