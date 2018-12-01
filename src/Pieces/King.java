@@ -35,15 +35,17 @@ public class King extends Piece {
             else return false;
         }
         // a castling move
-        if(this.getY_coord() == new_y_coord && (new_x_coord == 0 || new_x_coord == 7))
+        if(this.getY_coord() == new_y_coord && (Math.abs(this.getX_coord() - new_x_coord) == 2))
         {
             /*
             the king and the rook has'nt moved, there is no need to check if the other piece is a rook
             or if the piece is the same color of the king, because if it isn't than it has obliviously moved*/
-            if(this.isIn_starting_pos() && Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord].isIn_starting_pos())
+            int step = (new_x_coord > this.getX_coord())? 1 : -1;
+            int rook_x_coord = step == 1? 7:0;
+            if(this.isIn_starting_pos() && Board.board[rook_x_coord + Board.X_UPPER_BOUND * new_y_coord].isIn_starting_pos())
             {
-                int step = (new_x_coord > this.getX_coord())? 1 : -1;
-                for(int i = this.getX_coord() + step; i != new_x_coord; i += step)
+
+                for(int i = this.getX_coord() + step; i != new_x_coord + step; i += step)
                 {
                     Player enemy = this.getColor()? Board.white_player: Board.black_player;
                     // first part checks that the path to the rook is empty
@@ -53,7 +55,13 @@ public class King extends Piece {
                         return false;
                     }
                 }
-                valid_move = true;
+                Piece king = Board.board[this.getX_coord() + Board.X_UPPER_BOUND * this.getY_coord()];
+                Board.board[this.getX_coord() + Board.X_UPPER_BOUND * this.getY_coord()] = null;
+                Piece rook = Board.board[new_x_coord + Board.X_UPPER_BOUND * this.getY_coord()];
+                Board.board[new_x_coord + Board.X_UPPER_BOUND * this.getY_coord()] = null;
+                Board.board[(new_x_coord) + Board.X_UPPER_BOUND * this.getY_coord()] = king;
+                Board.board[(new_x_coord - step) + Board.X_UPPER_BOUND * this.getY_coord()] = rook;
+                return true;
             }
         }
         if (valid_move)
