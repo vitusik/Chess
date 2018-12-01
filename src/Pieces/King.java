@@ -48,7 +48,7 @@ public class King extends Piece {
                     Player enemy = this.getColor()? Board.white_player: Board.black_player;
                     // first part checks that the path to the rook is empty
                     // second part checks that the path isn't threatened by the enemy player
-                    if(Board.board[i + Board.X_UPPER_BOUND * new_y_coord] != null || Player.is_under_threat(i, new_y_coord, enemy.getPiece_list()))
+                    if(Board.board[i + Board.X_UPPER_BOUND * new_y_coord] != null || Board.is_under_threat(i, new_y_coord, enemy.getPiece_list()))
                     {
                         return false;
                     }
@@ -63,7 +63,7 @@ public class King extends Piece {
         return valid_move;
     }
 
-    boolean king_make_move_and_update(int new_x_coord, int new_y_coord) {
+    private boolean king_make_move_and_update(int new_x_coord, int new_y_coord) {
         Piece piece_in_final_positon = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
         Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = this;
         int cur_x = this.getX_coord();
@@ -71,7 +71,7 @@ public class King extends Piece {
         Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = null;
         this.setXYcoord(new_x_coord, new_y_coord);
         ArrayList<Piece> threats = this.getColor() ? Board.white_player.getPiece_list() : Board.black_player.getPiece_list();
-        if (Player.is_under_threat(new_x_coord, new_y_coord, threats)) {
+        if (Board.is_under_threat(new_x_coord, new_y_coord, threats)) {
             this.setXYcoord(cur_x, cur_y);
             Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = this;
             Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = piece_in_final_positon;

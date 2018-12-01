@@ -54,15 +54,4 @@ public class Player {
         return this.piece_list;
     }
 
-    public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
-        if (possible_threats == null) return false;
-        for(Piece piece : possible_threats)
-        {
-            if(piece.move_check(x, y))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 }

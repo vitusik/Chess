@@ -226,7 +226,7 @@ public abstract class Piece {
         int king_x = this.color? Board.black_player.getKing_x_coord() : Board.white_player.getKing_x_coord();
         int king_y = this.color? Board.black_player.getKing_y_coord() : Board.white_player.getKing_y_coord();
         ArrayList<Piece> threats = this.color? Board.white_player.getPiece_list(): Board.black_player.getPiece_list();
-        if(Player.is_under_threat(king_x, king_y, threats))
+        if(Board.is_under_threat(king_x, king_y, threats))
         {
             this.setXYcoord(cur_x, cur_y);
             Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = this;
