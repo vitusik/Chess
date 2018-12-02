@@ -74,7 +74,7 @@ public class Board {
         {
             board_string.append("*   ").append(c).append("   ");
         }
-        board_string.append("*");
+        board_string.append("*\n");
         System.out.println(board_string);
     }
 

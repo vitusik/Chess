@@ -37,7 +37,7 @@ public class King extends Piece {
             or if the piece is the same color of the king, because if it isn't than it has obliviously moved*/
             Player cur = this.getColor()? Board.black_player:Board.white_player;
             // cant castle if king is checked
-            if (!cur.isChecked()) return false;
+            if (cur.isChecked()) return false;
             int step = (new_x_coord > this.getX_coord())? 1 : -1;
             int rook_x_coord = step == 1? 7:0;
             if(this.isIn_starting_pos() && Board.board[rook_x_coord + Board.X_UPPER_BOUND * new_y_coord].isIn_starting_pos())
@@ -54,8 +54,8 @@ public class King extends Piece {
                 }
                 Piece king = Board.board[this.getX_coord() + Board.X_UPPER_BOUND * this.getY_coord()];
                 Board.board[this.getX_coord() + Board.X_UPPER_BOUND * this.getY_coord()] = null;
-                Piece rook = Board.board[new_x_coord + Board.X_UPPER_BOUND * this.getY_coord()];
-                Board.board[new_x_coord + Board.X_UPPER_BOUND * this.getY_coord()] = null;
+                Piece rook = Board.board[rook_x_coord + Board.X_UPPER_BOUND * this.getY_coord()];
+                Board.board[rook_x_coord + Board.X_UPPER_BOUND * this.getY_coord()] = null;
                 Board.board[(new_x_coord) + Board.X_UPPER_BOUND * this.getY_coord()] = king;
                 Board.board[(new_x_coord - step) + Board.X_UPPER_BOUND * this.getY_coord()] = rook;
                 return true;
