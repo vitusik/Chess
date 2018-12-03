@@ -50,7 +50,7 @@ public class PieceTest {
         Random rand = new Random();
         for( int i = 0; i < 99; i++)
         {
-            int rand_y = rand.nextInt(8) + 1;
+            int rand_y = rand.nextInt(7) + 1;
             if(p.move_type_checker(p.getX_coord(),rand_y) != MoveType.VERTICAL && rand_y != p.getY_coord())
             {
                 System.out.println("failed vertical check with x val of " + p.getX_coord() + " and y val of " + rand_y);
@@ -59,7 +59,7 @@ public class PieceTest {
         for( int i = 0; i < 99; i++)
         {
             int rand_x = rand.nextInt(4) + 5;
-            int rand_y = rand.nextInt(8) + 1;
+            int rand_y = rand.nextInt(7) + 1;
             if(p.move_type_checker(rand_x,rand_y) == MoveType.VERTICAL)
             {
                 System.out.println("failed vertical check with x val of " + rand_x + " and y val of " + rand_y);
@@ -68,7 +68,7 @@ public class PieceTest {
         for( int i = 0; i < 99; i++)
         {
             int rand_x = rand.nextInt(4);
-            int rand_y = rand.nextInt(8) + 1;
+            int rand_y = rand.nextInt(7) + 1;
             if(p.move_type_checker(rand_x,rand_y) == MoveType.VERTICAL)
             {
                 System.out.println("failed vertical check with x val of " + rand_x + " and y val of " + rand_y);
@@ -81,7 +81,7 @@ public class PieceTest {
         Random rand = new Random();
         for( int i = 0; i < 99; i++)
         {
-            int rand_x = rand.nextInt(8) + 1;
+            int rand_x = rand.nextInt(7) + 1;
             if(p.move_type_checker(rand_x,p.getY_coord()) != MoveType.HORIZONTAL && rand_x != p.getX_coord())
             {
                 System.out.println("failed horizontal check with x val of " + rand_x + " and y val of " + p.getY_coord());
@@ -89,7 +89,7 @@ public class PieceTest {
         }
         for( int i = 0; i < 99; i++)
         {
-            int rand_x = rand.nextInt(8) + 1;
+            int rand_x = rand.nextInt(7) + 1;
             int rand_y = rand.nextInt(4) + 5;
             if(p.move_type_checker(rand_x,rand_y) == MoveType.HORIZONTAL)
             {
@@ -98,7 +98,7 @@ public class PieceTest {
         }
         for( int i = 0; i < 99; i++)
         {
-            int rand_x = rand.nextInt(8) + 1;
+            int rand_x = rand.nextInt(7) + 1;
             int rand_y = rand.nextInt(4);
             if(p.move_type_checker(rand_x,rand_y) == MoveType.HORIZONTAL)
             {
@@ -168,8 +168,8 @@ public class PieceTest {
         Random rand = new Random();
         for(int i = 0; i < 99; i++)
         {
-            int x = rand.nextInt(8) + 1;
-            int y = rand.nextInt(8) + 1;
+            int x = rand.nextInt(7) + 1;
+            int y = rand.nextInt(7) + 1;
             Piece p = new Knight(x, y, true);
             if(     p.move_type_checker(x - 2, y + 1) != MoveType.KNIGHT ||
                     p.move_type_checker(x - 2, y - 1) != MoveType.KNIGHT ||
