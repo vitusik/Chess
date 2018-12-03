@@ -27,6 +27,7 @@ public abstract class Piece {
         color = c;
         allowed_moves = new ArrayList<>();
         in_starting_pos = true;
+        Board.board[x + Board.X_UPPER_BOUND * y] = this;
     }
     /**
      * x coordinate getter
@@ -60,8 +61,10 @@ public abstract class Piece {
 
     public void setXYcoord(int x, int y)
     {
+        Board.board[this.x_coord + Board.X_UPPER_BOUND * this.y_coord] = null;
         this.setX_coord(x);
         this.setY_coord(y);
+        Board.board[this.x_coord + Board.X_UPPER_BOUND * this.y_coord] = this;
     }
     /**
      * player type getter
@@ -139,16 +142,16 @@ public abstract class Piece {
         int step = (new_y_coord > this.y_coord)? 1 : -1;
         for (int i = this.y_coord + step ; i != new_y_coord; i += step)
         {
-            if (Board.board[this.x_coord + Board.X_UPPER_BOUND * i] != null)
+            if (Board.get_piece(this.x_coord, i) != null)
             {
                 return false;
             }
         }
-        if (Board.board[this.x_coord + Board.X_UPPER_BOUND * new_y_coord] == null) {
+        if (Board.get_piece(this.x_coord, new_y_coord) == null) {
             return true;
         } else
         {
-            Piece temp = Board.board[this.x_coord + Board.X_UPPER_BOUND * new_y_coord];
+            Piece temp = Board.get_piece(this.x_coord, new_y_coord);
             return temp.getColor() != this.getColor();
         }
     }
@@ -163,16 +166,16 @@ public abstract class Piece {
         int step = (new_x_coord > this.x_coord)? 1 : -1;
         for (int i = this.x_coord + step ; i != new_x_coord; i += step)
         {
-            if (Board.board[i + Board.X_UPPER_BOUND * this.y_coord] != null)
+            if (Board.get_piece(i, this.y_coord) != null)
             {
                 return false;
             }
         }
-        if (Board.board[new_x_coord + Board.X_UPPER_BOUND * this.y_coord] == null) {
+        if (Board.get_piece(new_x_coord, this.y_coord) == null) {
             return true;
         } else
         {
-            Piece temp = Board.board[new_x_coord + Board.X_UPPER_BOUND * this.y_coord];
+            Piece temp = Board.get_piece(new_x_coord, this.y_coord);
             return temp.getColor() != this.getColor();
         }
     }
@@ -190,17 +193,17 @@ public abstract class Piece {
         int j = this.y_coord + step_y;
         for (int i = this.x_coord + step_x ; i != new_x_coord; i += step_x)
         {
-            if (Board.board[i + Board.X_UPPER_BOUND * j] != null)
+            if (Board.get_piece(i, j) != null)
             {
                 return false;
             }
             j += step_y;
         }
-        if (Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] == null) {
+        if (Board.get_piece(new_x_coord, new_y_coord) == null) {
             return true;
         } else
         {
-            Piece temp = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
+            Piece temp = Board.get_piece(new_x_coord, new_y_coord);
             return temp.getColor() != this.getColor();
         }
     }
@@ -212,16 +215,14 @@ public abstract class Piece {
      * @return true if there is an enemy piece at the end position or an empty cell
      */
     private boolean knight_move_check(int new_x_coord, int new_y_coord) {
-        return this.getColor() != Board.board[new_x_coord + new_y_coord * Board.X_UPPER_BOUND].getColor();
+        return this.getColor() != Board.get_piece(new_x_coord, new_y_coord).getColor();
     }
 
 
     boolean make_move_and_update(int new_x_coord, int new_y_coord){
-        Piece piece_in_final_positon = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
-        Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = this;
+        Piece piece_in_final_positon = Board.get_piece(new_x_coord, new_y_coord);
         int cur_x = this.getX_coord();
         int cur_y = this.getY_coord();
-        Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = null;
         this.setXYcoord(new_x_coord, new_y_coord);
         int king_x = this.color? Board.black_player.getKing_x_coord() : Board.white_player.getKing_x_coord();
         int king_y = this.color? Board.black_player.getKing_y_coord() : Board.white_player.getKing_y_coord();
@@ -229,8 +230,7 @@ public abstract class Piece {
         if(Board.is_under_threat(king_x, king_y, threats))
         {
             this.setXYcoord(cur_x, cur_y);
-            Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = this;
-            Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = piece_in_final_positon;
+            piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
             return false;
         }
         return true;

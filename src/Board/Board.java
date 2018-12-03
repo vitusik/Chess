@@ -31,7 +31,6 @@ public class Board {
         ArrayList<Piece> piece_array = PieceFactory.create_pieces();
         for(Piece p : piece_array)
         {
-            board[p.getX_coord() + p.getY_coord() * X_UPPER_BOUND] = p;
             if(p.getColor())
             {
                 black_piece_list.add(p);
@@ -78,6 +77,10 @@ public class Board {
         System.out.println(board_string);
     }
 
+    public static Piece get_piece(int x, int y)
+    {
+        return Board.board[x + X_UPPER_BOUND * y];
+    }
     public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
         if (possible_threats == null) return false;
         for(Piece piece : possible_threats)

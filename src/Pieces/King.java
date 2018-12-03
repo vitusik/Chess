@@ -22,7 +22,7 @@ public class King extends Piece {
         boolean valid_move = false;
         if(Math.abs(this.getX_coord() - new_x_coord) <= 1 && Math.abs(this.getY_coord() - new_y_coord) <= 1)
         {
-            if(Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] == null)
+            if(Board.get_piece(new_x_coord, new_y_coord) == null)
             {
                 this.setIn_starting_pos(false);
                 valid_move = true;
@@ -40,24 +40,22 @@ public class King extends Piece {
             if (cur.isChecked()) return false;
             int step = (new_x_coord > this.getX_coord())? 1 : -1;
             int rook_x_coord = step == 1? 7:0;
-            if(this.isIn_starting_pos() && Board.board[rook_x_coord + Board.X_UPPER_BOUND * new_y_coord].isIn_starting_pos())
+            if(this.isIn_starting_pos() && Board.get_piece(rook_x_coord, new_y_coord).isIn_starting_pos())
             {
                 Player enemy = this.getColor()? Board.white_player: Board.black_player;
                 for(int i = this.getX_coord() + step; i != new_x_coord + step; i += step)
                 {
                     // first part checks that the path to the rook is empty
                     // second part checks that the path isn't threatened by the enemy player
-                    if(Board.board[i + Board.X_UPPER_BOUND * new_y_coord] != null || Board.is_under_threat(i, new_y_coord, enemy.getPiece_list()))
+                    if(Board.get_piece(i, new_y_coord) != null || Board.is_under_threat(i, new_y_coord, enemy.getPiece_list()))
                     {
                         return false;
                     }
                 }
-                Piece king = Board.board[this.getX_coord() + Board.X_UPPER_BOUND * this.getY_coord()];
-                Board.board[this.getX_coord() + Board.X_UPPER_BOUND * this.getY_coord()] = null;
+                Piece king = Board.get_piece(this.getX_coord(), this.getY_coord());
                 Piece rook = Board.board[rook_x_coord + Board.X_UPPER_BOUND * this.getY_coord()];
-                Board.board[rook_x_coord + Board.X_UPPER_BOUND * this.getY_coord()] = null;
-                Board.board[(new_x_coord) + Board.X_UPPER_BOUND * this.getY_coord()] = king;
-                Board.board[(new_x_coord - step) + Board.X_UPPER_BOUND * this.getY_coord()] = rook;
+                king.setXYcoord(new_x_coord, new_y_coord);
+                rook.setXYcoord(new_x_coord - step, rook.getY_coord());
                 return true;
             }
         }
@@ -69,17 +67,14 @@ public class King extends Piece {
     }
 
     private boolean king_make_move_and_update(int new_x_coord, int new_y_coord) {
-        Piece piece_in_final_positon = Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord];
-        Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = this;
+        Piece piece_in_final_positon = Board.get_piece(new_x_coord, new_y_coord);
         int cur_x = this.getX_coord();
         int cur_y = this.getY_coord();
-        Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = null;
         this.setXYcoord(new_x_coord, new_y_coord);
         ArrayList<Piece> threats = this.getColor() ? Board.white_player.getPiece_list() : Board.black_player.getPiece_list();
         if (Board.is_under_threat(new_x_coord, new_y_coord, threats)) {
             this.setXYcoord(cur_x, cur_y);
-            Board.board[cur_x + Board.X_UPPER_BOUND * cur_y] = this;
-            Board.board[new_x_coord + Board.X_UPPER_BOUND * new_y_coord] = piece_in_final_positon;
+            piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
             return false;
         }
         if(this.getColor()) Board.black_player.setKing_x_y_coord(new_x_coord, new_y_coord);
