@@ -7,11 +7,11 @@ import java.util.Arrays;
 
 public class PieceFactory {
     private final static int INITAL_Y_COORD_WHITE_PLAYER_PAWN = 1;
-    private final static int INITAL_Y_COORD_WHITE_PLAYER_OTHER = 0;
+    public final static int INITAL_Y_COORD_WHITE_PLAYER_OTHER = 0;
     private final static int DIST_BETWEEN_PAWS = 5;
-    private final static int DIST_BETWEEN_OTHER_PIECES = 7;
+    public final static int DIST_BETWEEN_PIECES = 7;
     private final static int QUEEN_INITIAL_X = 3;
-    private final static int KING_INITIAL_X = 4;
+    public final static int KING_INITIAL_X = 4;
     public static ArrayList<Piece> create_pieces()
     {
         ArrayList<Piece> piece_array = new ArrayList<>();
@@ -38,15 +38,15 @@ public class PieceFactory {
             Piece white_rook = new Rook(i * Board.X_UPPER_BOUND - i, INITAL_Y_COORD_WHITE_PLAYER_OTHER, Board.WHITE);
             Piece white_knight = new Knight(i * Board.X_UPPER_BOUND - 3 * i + 1, INITAL_Y_COORD_WHITE_PLAYER_OTHER, Board.WHITE);
             Piece white_bishop = new Bishop(i * Board.X_UPPER_BOUND - 5 * i + 2, INITAL_Y_COORD_WHITE_PLAYER_OTHER, Board.WHITE);
-            Piece black_rook = new Rook(i * Board.X_UPPER_BOUND - i, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_OTHER_PIECES, Board.BLACK);
-            Piece black_knight = new Knight(i * Board.X_UPPER_BOUND - 3 * i + 1, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_OTHER_PIECES, Board.BLACK);
-            Piece black_bishop = new Bishop(i * Board.X_UPPER_BOUND - 5 * i + 2, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_OTHER_PIECES, Board.BLACK);
+            Piece black_rook = new Rook(i * Board.X_UPPER_BOUND - i, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_PIECES, Board.BLACK);
+            Piece black_knight = new Knight(i * Board.X_UPPER_BOUND - 3 * i + 1, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_PIECES, Board.BLACK);
+            Piece black_bishop = new Bishop(i * Board.X_UPPER_BOUND - 5 * i + 2, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_PIECES, Board.BLACK);
             piece_array.addAll(Arrays.asList(white_rook, white_knight, white_bishop,black_rook,black_knight,black_bishop));
         }
         Piece white_king = new King(KING_INITIAL_X, INITAL_Y_COORD_WHITE_PLAYER_OTHER, Board.WHITE);
-        Piece black_king = new King(KING_INITIAL_X, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_OTHER_PIECES, Board.BLACK);
+        Piece black_king = new King(KING_INITIAL_X, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_PIECES, Board.BLACK);
         Piece white_queen = new Queen(QUEEN_INITIAL_X, INITAL_Y_COORD_WHITE_PLAYER_OTHER, Board.WHITE);
-        Piece black_queen = new Queen(QUEEN_INITIAL_X, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_OTHER_PIECES, Board.BLACK);
+        Piece black_queen = new Queen(QUEEN_INITIAL_X, INITAL_Y_COORD_WHITE_PLAYER_OTHER + DIST_BETWEEN_PIECES, Board.BLACK);
         piece_array.addAll(Arrays.asList(white_king, white_queen, black_king, black_queen));
         return piece_array;
     }
