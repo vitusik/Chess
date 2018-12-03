@@ -6,9 +6,6 @@ import java.util.Arrays;
 
 public class KingTest {
     /*
-            init black king at its natural pos, add to black player list
-            init white king at its natural pos, add to white player list
-            init rooks at pos, add to players lists
             tests:
             1. simple move in any direction, init king at the row of the paws
             2. simple move that ends with a check
