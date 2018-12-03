@@ -41,7 +41,9 @@ public class Board {
             }
         }
         white_player.setPiece_list(white_piece_list);
+        white_player.setKing_x_y_coord(PieceFactory.KING_INITIAL_X, PieceFactory.INITAL_Y_COORD_WHITE_PLAYER_OTHER);
         black_player.setPiece_list(black_piece_list);
+        black_player.setKing_x_y_coord(PieceFactory.KING_INITIAL_X, PieceFactory.INITAL_Y_COORD_WHITE_PLAYER_OTHER + PieceFactory.DIST_BETWEEN_PIECES);
     }
 
     public static void print_board() {
