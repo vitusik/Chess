@@ -15,19 +15,19 @@ public class KingTest {
          */
 
     private static void setup() {
-        King black_king = new King(4,0, Board.BLACK);
-        King white_king = new King(4,7, Board.WHITE);
-        Rook rook_b_1 = new Rook(0,0, Board.BLACK);
-        Rook rook_b_2 = new Rook(7,0, Board.BLACK);
-        Rook rook_w_1 = new Rook(0,7, Board.WHITE);
-        Rook rook_w_2 = new Rook(7,7, Board.WHITE);
+        King black_king = new King(4,7, Board.BLACK);
+        King white_king = new King(4,0, Board.WHITE);
+        Rook rook_b_1 = new Rook(0,7, Board.BLACK);
+        Rook rook_b_2 = new Rook(7,7, Board.BLACK);
+        Rook rook_w_1 = new Rook(0,0, Board.WHITE);
+        Rook rook_w_2 = new Rook(7,0, Board.WHITE);
 
         Board.black_player = new Player(Board.BLACK);
         Board.white_player = new Player(Board.WHITE);
-        Board.black_player.setKing_x_y_coord(4,0);
+        Board.black_player.setKing_x_y_coord(4,7);
         ArrayList<Piece> black_list = new ArrayList<Piece>(Arrays.asList(black_king, rook_b_1, rook_b_2));
         Board.black_player.setPiece_list(black_list);
-        Board.white_player.setKing_x_y_coord(4,7);
+        Board.white_player.setKing_x_y_coord(4,0);
         ArrayList<Piece> white_list = new ArrayList<Piece>(Arrays.asList(white_king, rook_w_1, rook_w_2));
         Board.white_player.setPiece_list(white_list);
 
@@ -36,7 +36,7 @@ public class KingTest {
 
     private static void test1() {
         setup();
-        Piece king = Board.board[4];
+        Piece king = Board.get_piece(4 ,0);
         int old_x = king.getX_coord();
         int old_y = king.getY_coord();
         king.move_check(4,1);
@@ -44,9 +44,7 @@ public class KingTest {
         assert Board.board[old_x + Board.X_UPPER_BOUND * old_y] == null;
         assert Board.black_player.getKing_x_coord() == king.getX_coord();
         assert Board.black_player.getKing_y_coord() == king.getY_coord();
-
-
-        king = Board.board[4 + Board.X_UPPER_BOUND * 7];
+        king = Board.get_piece(4,7);
         old_x = king.getX_coord();
         old_y = king.getY_coord();
         king.move_check(4,6);
@@ -57,7 +55,17 @@ public class KingTest {
         Board.clear_board();
     }
 
-    public static void main(String[] args) {
+    private static void test2(){
+        setup();
+        Board.get_piece(0,7).setXYcoord(4,4);
+        Piece white_king = Board.get_piece(4,0);
+        Board.print_board();
+        white_king.move_check(4,1);
+        Board.print_board();
+    }
+    public static void main(String[] args)
+    {
         test1();
+        test2();
     }
 }

@@ -68,13 +68,14 @@ public class King extends Piece {
 
     private boolean king_make_move_and_update(int new_x_coord, int new_y_coord) {
         Piece piece_in_final_positon = Board.get_piece(new_x_coord, new_y_coord);
+        boolean empty_tile = piece_in_final_positon == null;
         int cur_x = this.getX_coord();
         int cur_y = this.getY_coord();
         this.setXYcoord(new_x_coord, new_y_coord);
         ArrayList<Piece> threats = this.getColor() ? Board.white_player.getPiece_list() : Board.black_player.getPiece_list();
         if (Board.is_under_threat(new_x_coord, new_y_coord, threats)) {
             this.setXYcoord(cur_x, cur_y);
-            piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
+            if(!empty_tile) piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
             return false;
         }
         if(this.getColor()) Board.black_player.setKing_x_y_coord(new_x_coord, new_y_coord);
