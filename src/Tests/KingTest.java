@@ -59,13 +59,28 @@ public class KingTest {
         setup();
         Board.get_piece(0,7).setXYcoord(4,4);
         Piece white_king = Board.get_piece(4,0);
-        Board.print_board();
         white_king.move_check(4,1);
-        Board.print_board();
+        assert Board.board[4] == white_king;
+        assert Board.white_player.getKing_x_coord() == 4;
+        assert Board.white_player.getKing_y_coord() == 0;
+        assert Board.board[4 + 1 * Board.X_UPPER_BOUND] == null;
+        Board.clear_board();
+    }
+
+    private static void test3()
+    {
+        setup();
+        Board.get_piece(0,7).setXYcoord(4,4);
+        Board.get_piece(0,0).setXYcoord(4, 2);
+        Piece white_rook = Board.get_piece(4,2);
+        white_rook.move_check(0,2);
+        assert white_rook.getX_coord() == 4;
+        assert Board.board[4 + 2 * Board.X_UPPER_BOUND] == null;
     }
     public static void main(String[] args)
     {
         test1();
         test2();
+        test3();
     }
 }

@@ -221,6 +221,7 @@ public abstract class Piece {
 
     boolean make_move_and_update(int new_x_coord, int new_y_coord){
         Piece piece_in_final_positon = Board.get_piece(new_x_coord, new_y_coord);
+        boolean empty_tile = piece_in_final_positon == null;
         int cur_x = this.getX_coord();
         int cur_y = this.getY_coord();
         this.setXYcoord(new_x_coord, new_y_coord);
@@ -230,11 +231,10 @@ public abstract class Piece {
         if(Board.is_under_threat(king_x, king_y, threats))
         {
             this.setXYcoord(cur_x, cur_y);
-            piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
+            if(!empty_tile) piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
             return false;
         }
         return true;
-
     }
     /**
      * method which encapsulates all the previous methods and call the correct move validity check method
