@@ -42,16 +42,16 @@ public class KingTest {
         king.move_check(4,1);
         assert Board.board[king.getX_coord() + Board.X_UPPER_BOUND * king.getY_coord()] == king;
         assert Board.board[old_x + Board.X_UPPER_BOUND * old_y] == null;
-        assert Board.black_player.getKing_x_coord() == king.getX_coord();
-        assert Board.black_player.getKing_y_coord() == king.getY_coord();
+        assert Board.white_player.getKing_x_coord() == king.getX_coord();
+        assert Board.white_player.getKing_y_coord() == king.getY_coord();
         king = Board.get_piece(4,7);
         old_x = king.getX_coord();
         old_y = king.getY_coord();
         king.move_check(4,6);
         assert Board.board[king.getX_coord() + Board.X_UPPER_BOUND * king.getY_coord()] == king;
         assert Board.board[old_x + Board.X_UPPER_BOUND * old_y] == null;
-        assert Board.white_player.getKing_x_coord() == king.getX_coord();
-        assert Board.white_player.getKing_y_coord() == king.getY_coord();
+        assert Board.black_player.getKing_x_coord() == king.getX_coord();
+        assert Board.black_player.getKing_y_coord() == king.getY_coord();
         Board.clear_board();
     }
 
@@ -75,7 +75,8 @@ public class KingTest {
         Piece white_rook = Board.get_piece(4,2);
         white_rook.move_check(0,2);
         assert white_rook.getX_coord() == 4;
-        assert Board.board[4 + 2 * Board.X_UPPER_BOUND] == null;
+        assert Board.get_piece(0,2) == null;
+        assert Board.get_piece(4,2) != null;
     }
     public static void main(String[] args)
     {
