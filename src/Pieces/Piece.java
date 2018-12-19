@@ -219,14 +219,12 @@ public abstract class Piece {
     }
 
 
-    boolean make_move_and_update(int new_x_coord, int new_y_coord){
+    boolean make_move_and_update(int new_x_coord, int new_y_coord, int king_x, int king_y){
         Piece piece_in_final_positon = Board.get_piece(new_x_coord, new_y_coord);
         boolean empty_tile = piece_in_final_positon == null;
         int cur_x = this.getX_coord();
         int cur_y = this.getY_coord();
         this.setXYcoord(new_x_coord, new_y_coord);
-        int king_x = this.color? Board.black_player.getKing_x_coord() : Board.white_player.getKing_x_coord();
-        int king_y = this.color? Board.black_player.getKing_y_coord() : Board.white_player.getKing_y_coord();
         ArrayList<Piece> threats = this.color? Board.white_player.getPiece_list(): Board.black_player.getPiece_list();
         if(Board.is_under_threat(king_x, king_y, threats))
         {
@@ -273,7 +271,9 @@ public abstract class Piece {
         if (valid_move && in_starting_pos) in_starting_pos = false;
         if (valid_move)
         {
-            valid_move = this.make_move_and_update(new_x_coord, new_y_coord);
+            int king_x = this.color? Board.black_player.getKing_x_coord() : Board.white_player.getKing_x_coord();
+            int king_y = this.color? Board.black_player.getKing_y_coord() : Board.white_player.getKing_y_coord();
+            valid_move = this.make_move_and_update(new_x_coord, new_y_coord, king_x, king_y);
         }
         return valid_move;
     }
