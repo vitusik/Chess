@@ -25,10 +25,10 @@ public class KingTest {
         Board.black_player = new Player(Board.BLACK);
         Board.white_player = new Player(Board.WHITE);
         Board.black_player.setKing_x_y_coord(4,7);
-        ArrayList<Piece> black_list = new ArrayList<Piece>(Arrays.asList(black_king, rook_b_1, rook_b_2));
+        ArrayList<Piece> black_list = new ArrayList<>(Arrays.asList(black_king, rook_b_1, rook_b_2));
         Board.black_player.setPiece_list(black_list);
         Board.white_player.setKing_x_y_coord(4,0);
-        ArrayList<Piece> white_list = new ArrayList<Piece>(Arrays.asList(white_king, rook_w_1, rook_w_2));
+        ArrayList<Piece> white_list = new ArrayList<>(Arrays.asList(white_king, rook_w_1, rook_w_2));
         Board.white_player.setPiece_list(white_list);
 
 
@@ -67,8 +67,7 @@ public class KingTest {
         Board.clear_board();
     }
 
-    private static void test3()
-    {
+    private static void test3() {
         setup();
         Board.get_piece(0,7).setXYcoord(4,4);
         Board.get_piece(0,0).setXYcoord(4, 2);
@@ -77,11 +76,57 @@ public class KingTest {
         assert white_rook.getX_coord() == 4;
         assert Board.get_piece(0,2) == null;
         assert Board.get_piece(4,2) != null;
+        Board.clear_board();
     }
+
+    private static void test4(){
+        setup();
+        Board.get_piece(0,0).setXYcoord(4,1);
+        Board.get_piece(0,7).setXYcoord(4,6);
+        Piece rook = Board.get_piece(4,1);
+        rook.move_check(3,1);
+        assert rook.getX_coord() == 4;
+        Board.clear_board();
+    }
+
+    private static void test5(){
+        setup();
+        Piece white_king = Board.get_piece(4,0);
+        Piece white_rook = Board.get_piece(0,0);
+        white_king.move_check(2,0);
+        assert white_king.getX_coord() == 2;
+        assert white_rook.getX_coord() == 3;
+        Board.clear_board();
+        setup();
+        white_king = Board.get_piece(4,0);
+        white_rook = Board.get_piece(7,0);
+        white_king.move_check(6,0);
+        assert white_king.getX_coord() == 6;
+        assert white_rook.getX_coord() == 5;
+        Board.clear_board();
+
+        setup();
+        Piece black_king = Board.get_piece(4,7);
+        Piece black_rook = Board.get_piece(0,7);
+        black_king.move_check(2,7);
+        assert black_king.getX_coord() == 2;
+        assert black_rook.getX_coord() == 3;
+        Board.clear_board();
+        setup();
+        black_king = Board.get_piece(4,7);
+        black_rook = Board.get_piece(7,7);
+        black_king.move_check(6,7);
+        assert black_king.getX_coord() == 6;
+        assert black_rook.getX_coord() == 5;
+        Board.clear_board();
+    }
+
     public static void main(String[] args)
     {
         test1();
         test2();
         test3();
+        test4();
+        test5();
     }
 }
