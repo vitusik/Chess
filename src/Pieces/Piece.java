@@ -232,6 +232,19 @@ public abstract class Piece {
             if(!empty_tile) piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
             return false;
         }
+        if(!empty_tile)
+        {
+            Player p = piece_in_final_positon.getColor()? Board.black_player:Board.white_player;
+            ArrayList<Piece> list_of_pieces = p.getPiece_list();
+            for(int i = 0; i < list_of_pieces.size(); i++)
+            {
+                if (list_of_pieces.get(i) == piece_in_final_positon)
+                {
+                    list_of_pieces.remove(i);
+                    break;
+                }
+            }
+        }
         return true;
     }
     /**

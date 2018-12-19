@@ -193,6 +193,8 @@ public class PieceTest {
     }
     private static void test6(){
         //horizontal move validity
+        Board.black_player = new Player(Board.BLACK);
+        Board.white_player = new Player(Board.WHITE);
         Piece attacking_piece = new Rook(0,0,Board.WHITE);
         Piece attacked_piece = new Rook(5,0,Board.BLACK);
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
@@ -216,6 +218,8 @@ public class PieceTest {
     }
     private static void test7(){
         //vertical move validity
+        Board.black_player = new Player(Board.BLACK);
+        Board.white_player = new Player(Board.WHITE);
         Piece attacking_piece = new Rook(0,0,Board.WHITE);
         Piece attacked_piece = new Rook(0,5,Board.BLACK);
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
@@ -240,6 +244,8 @@ public class PieceTest {
     }
     private static void test8(){
         // diagonal move validity
+        Board.black_player = new Player(Board.BLACK);
+        Board.white_player = new Player(Board.WHITE);
         Piece attacking_piece = new Queen(0,0,Board.WHITE);
         Piece attacked_piece = new Queen(5,5,Board.BLACK);
         Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;

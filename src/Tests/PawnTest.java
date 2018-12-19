@@ -35,6 +35,8 @@ public class PawnTest {
     }
     public static void test3()
     {
+        Board.black_player = new Player(Board.BLACK);
+        Board.white_player = new Player(Board.WHITE);
         Random rand = new Random();
         Boolean p = rand.nextBoolean();
         int rand_x = rand.nextInt(8);

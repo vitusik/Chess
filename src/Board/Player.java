@@ -44,6 +44,7 @@ public class Player {
     public Player(boolean color) {
         this.color = color;
         this.checked = false;
+        this.piece_list = new ArrayList<>();
     }
 
     public void setPiece_list(ArrayList<Piece> piece_list) {
