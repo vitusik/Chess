@@ -81,16 +81,6 @@ public class KingTest {
 
     private static void test4(){
         setup();
-        Board.get_piece(0,0).setXYcoord(4,1);
-        Board.get_piece(0,7).setXYcoord(4,6);
-        Piece rook = Board.get_piece(4,1);
-        rook.move_check(3,1);
-        assert rook.getX_coord() == 4;
-        Board.clear_board();
-    }
-
-    private static void test5(){
-        setup();
         Piece white_king = Board.get_piece(4,0);
         Piece white_rook = Board.get_piece(0,0);
         white_king.move_check(2,0);
@@ -121,6 +111,16 @@ public class KingTest {
         Board.clear_board();
     }
 
+    private static void test5()
+    {
+        setup();
+        Board.get_piece(0,7).setXYcoord(3,7);
+        Piece white_king = Board.get_piece(4,0);
+        Piece white_rook = Board.get_piece(0,0);
+        white_king.move_check(2,0);
+        assert white_king.getX_coord() == 4;
+        assert white_rook.getX_coord() == 0;
+    }
     public static void main(String[] args)
     {
         test1();
