@@ -29,13 +29,13 @@ public class King extends Piece {
             /*
             the king and the rook has'nt moved, there is no need to check if the other piece is a rook
             or if the piece is the same color of the king, because if it isn't than it has obliviously moved*/
-            Player cur = this.getColor() ? Board.black_player : Board.white_player;
+            Player cur = Board.get_player(this.getColor());
             // cant castle if king is checked
             if (cur.isChecked()) return false;
             int step = (new_x_coord > this.getX_coord()) ? 1 : -1;
             int rook_x_coord = step == 1 ? 7 : 0;
             if (this.isIn_starting_pos() && Board.get_piece(rook_x_coord, new_y_coord).isIn_starting_pos()) {
-                Player enemy = this.getColor() ? Board.white_player : Board.black_player;
+                Player enemy = Board.get_player(!this.getColor());
                 for (int i = this.getX_coord() + step; i != new_x_coord + step; i += step) {
                     // first part checks that the path to the rook is empty
                     // second part checks that the path isn't threatened by the enemy player

@@ -273,8 +273,8 @@ public abstract class Piece {
         if (valid_move && in_starting_pos) in_starting_pos = false;
         if (valid_move)
         {
-            int king_x = this.color? Board.black_player.getKing_x_coord() : Board.white_player.getKing_x_coord();
-            int king_y = this.color? Board.black_player.getKing_y_coord() : Board.white_player.getKing_y_coord();
+            int king_x = Board.get_player(this.getColor()).getKing_x_coord();
+            int king_y = Board.get_player(this.getColor()).getKing_y_coord();
             valid_move = this.make_move_and_update(new_x_coord, new_y_coord, king_x, king_y);
         }
         return valid_move;

@@ -96,6 +96,11 @@ public class Board {
                 y_coord + 1 <= Board.Y_UPPER_BOUND && y_coord + 1 >= Board.Y_LOWER_BOUND);
     }
 
+    public static Player get_player(boolean color){
+        if(color == BLACK) return black_player;
+        return white_player;
+    }
+
     public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
         if (possible_threats == null) return false;
         Piece threatened = Board.get_piece(x, y);
