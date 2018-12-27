@@ -271,13 +271,30 @@ public abstract class Piece {
                 break;
         }
         if (valid_move && in_starting_pos) in_starting_pos = false;
-        if (valid_move)
-        {
-            int king_x = Board.get_player(this.getColor()).getKing_x_coord();
-            int king_y = Board.get_player(this.getColor()).getKing_y_coord();
-            valid_move = this.make_move_and_update(new_x_coord, new_y_coord, king_x, king_y);
-        }
         return valid_move;
     }
 
+    public boolean make_move(int new_x_coord, int new_y_coord){
+        boolean valid_move = this.move_check(new_x_coord, new_y_coord);
+        if(valid_move)
+        {
+            int king_x = Board.get_player(this.getColor()).getKing_x_coord();
+            int king_y = Board.get_player(this.getColor()).getKing_y_coord();
+            boolean king_move = (this.getX_coord() == king_x) && (this.getY_coord() == king_y);
+            if(king_move)
+            {
+                valid_move = this.make_move_and_update(new_x_coord, new_y_coord, new_x_coord, new_y_coord);
+                if(valid_move)
+                {
+                    if (this.getColor()) Board.black_player.setKing_x_y_coord(new_x_coord, new_y_coord);
+                    else Board.white_player.setKing_x_y_coord(new_x_coord, new_y_coord);
+                }
+            }
+            else
+            {
+                valid_move = this.make_move_and_update(new_x_coord, new_y_coord, king_x, king_y);
+            }
+        }
+        return valid_move;
+    }
 }

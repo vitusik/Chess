@@ -103,19 +103,11 @@ public class Board {
 
     public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
         if (possible_threats == null) return false;
-        Piece threatened = Board.get_piece(x, y);
-        boolean empty_tile = threatened == null;
         for(Piece piece : possible_threats)
         {
             int cur_x = piece.getX_coord();
             int cur_y = piece.getY_coord();
-            if(piece.move_check(x, y))
-            {
-                //if true than the attacking piece moves to the place of the threatened piece
-                piece.setXYcoord(cur_x, cur_y);
-                if(!empty_tile) threatened.setXYcoord(x, y);
-                return true;
-            }
+            if(piece.move_check(x, y)) return true;
         }
         return false;
     }

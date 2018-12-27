@@ -89,12 +89,6 @@ public class Pawn extends Piece {
             default:
                 return false;
         }
-        if(valid_move)
-        {
-            int king_x = Board.get_player(this.getColor()).getKing_x_coord();
-            int king_y = Board.get_player(this.getColor()).getKing_y_coord();
-            valid_move = this.make_move_and_update(new_x_coord, new_y_coord, king_x, king_y);
-        }
         return valid_move;
     }
 }

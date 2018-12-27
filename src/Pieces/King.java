@@ -50,13 +50,6 @@ public class King extends Piece {
                 return true;
             }
         }
-        if (valid_move) {
-            if (this.make_move_and_update(new_x_coord, new_y_coord, new_x_coord, new_y_coord)) {
-                if (this.getColor()) Board.black_player.setKing_x_y_coord(new_x_coord, new_y_coord);
-                else Board.white_player.setKing_x_y_coord(new_x_coord, new_y_coord);
-                return true;
-            }
-        }
         return valid_move;
     }
 }
