@@ -91,18 +91,6 @@ public abstract class Piece {
     }
 
     /**
-     * method which checks if the given (x,y) coordinate is within the bounds of the board
-     * @param x_coord the x coordinate
-     * @param y_coord the y coordinate
-     * @return true if the coordinate is in bounds
-     */
-    boolean bound_check(int x_coord, int y_coord) {
-        // the x,y coordinates ranges between 0 and 7 in the board array and because of that they need to be adjusted
-        return (x_coord + 1 <= Board.X_UPPER_BOUND && x_coord + 1 >= Board.X_LOWER_BOUND &&
-                y_coord + 1 <= Board.Y_UPPER_BOUND && y_coord + 1 >= Board.Y_LOWER_BOUND);
-    }
-
-    /**
      * method which takes new (x,y) position and returns the type of move that can be made from the current position
      * to get to the new position
      * @param end_x_coord the new x coordinate of the piece
@@ -247,6 +235,7 @@ public abstract class Piece {
         }
         return true;
     }
+
     /**
      * method which encapsulates all the previous methods and call the correct move validity check method
      * @param new_x_coord the end x coordinate of the move
@@ -257,7 +246,7 @@ public abstract class Piece {
     public boolean move_check(int new_x_coord, int new_y_coord){
         MoveType cur_move = this.move_type_checker(new_x_coord, new_y_coord);
         boolean valid_move = false;
-        if(!this.bound_check(new_x_coord, new_y_coord))
+        if(!Board.bound_check(new_x_coord, new_y_coord))
         {
             return false;
         }

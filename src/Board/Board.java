@@ -83,6 +83,19 @@ public class Board {
     {
         return Board.board[x + X_UPPER_BOUND * y];
     }
+
+    /**
+     * method which checks if the given (x,y) coordinate is within the bounds of the board
+     * @param x_coord the x coordinate
+     * @param y_coord the y coordinate
+     * @return true if the coordinate is in bounds
+     */
+    public static boolean bound_check(int x_coord, int y_coord) {
+        // the x,y coordinates ranges between 0 and 7 in the board array and because of that they need to be adjusted
+        return (x_coord + 1 <= Board.X_UPPER_BOUND && x_coord + 1 >= Board.X_LOWER_BOUND &&
+                y_coord + 1 <= Board.Y_UPPER_BOUND && y_coord + 1 >= Board.Y_LOWER_BOUND);
+    }
+
     public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
         if (possible_threats == null) return false;
         Piece threatened = Board.get_piece(x, y);

@@ -8,13 +8,12 @@ import java.util.Random;
 public class PieceTest {
     private static void test1() {
         //bound checks
-        Piece p = new Queen(1,1, true);
         Random rand = new Random();
         // random x,y values in the range of [1,8] - meaning legal moves
         for(int i = 0; i  < 99;){
             int rand_x = rand.nextInt(8);
             int rand_y = rand.nextInt(8);
-            if(!p.move_check(rand_x, rand_y ) && (MoveType.NO_MOVE != p.move_type_checker(rand_x, rand_y) && MoveType.KNIGHT != p.move_type_checker(rand_x, rand_y))){
+            if(!Board.bound_check(rand_x,rand_y)){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
@@ -24,7 +23,7 @@ public class PieceTest {
         for(int i = 0; i  < 99;){
             int rand_x = rand.nextInt(100) + 9;
             int rand_y = rand.nextInt(100) + 9;
-            if(p.move_check(rand_x, rand_y) && (MoveType.NO_MOVE != p.move_type_checker(rand_x, rand_y) && MoveType.KNIGHT != p.move_type_checker(rand_x, rand_y))){
+            if(Board.bound_check(rand_x,rand_y)){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
@@ -36,13 +35,12 @@ public class PieceTest {
             rand_x = rand_x * -1;
             int rand_y = rand.nextInt(100) + 1;
             rand_y = rand_y * -1;
-            if(p.move_check(rand_x, rand_y) && (MoveType.NO_MOVE != p.move_type_checker(rand_x, rand_y) && MoveType.KNIGHT != p.move_type_checker(rand_x, rand_y))){
+            if(Board.bound_check(rand_x,rand_y)){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
             else i++;
         }
-        Board.clear_board();
     }
     private static void test2(){
         //move type checks for vertical moves

@@ -27,7 +27,7 @@ public class Pawn extends Piece {
         boolean valid_move = false;
         boolean cur_move_valid_dir = (new_y_coord < this.getY_coord() == this.getColor());
         MoveType moveType = move_type_checker(new_x_coord, new_y_coord);
-        if(!bound_check(new_x_coord,new_y_coord))
+        if(!Board.bound_check(new_x_coord,new_y_coord))
         {
             return false;
         }
