@@ -13,7 +13,7 @@ public class PieceTest {
         for(int i = 0; i  < 99;){
             int rand_x = rand.nextInt(8);
             int rand_y = rand.nextInt(8);
-            if(!Board.bound_check(rand_x,rand_y)){
+            if(!Board.boundCheck(rand_x,rand_y)){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
@@ -23,7 +23,7 @@ public class PieceTest {
         for(int i = 0; i  < 99;){
             int rand_x = rand.nextInt(100) + 9;
             int rand_y = rand.nextInt(100) + 9;
-            if(Board.bound_check(rand_x,rand_y)){
+            if(Board.boundCheck(rand_x,rand_y)){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
@@ -35,7 +35,7 @@ public class PieceTest {
             rand_x = rand_x * -1;
             int rand_y = rand.nextInt(100) + 1;
             rand_y = rand_y * -1;
-            if(Board.bound_check(rand_x,rand_y)){
+            if(Board.boundCheck(rand_x,rand_y)){
                 System.out.println("failed bound check with x val of " + rand_x + " and y val of " + rand_y);
                 break;
             }
@@ -49,16 +49,16 @@ public class PieceTest {
         for( int i = 0; i < 99; i++)
         {
             int rand_y = rand.nextInt(7) + 1;
-            if(p.move_type_checker(p.getX_coord(),rand_y) != MoveType.VERTICAL && rand_y != p.getY_coord())
+            if(p.moveTypeChecker(p.getxCoord(),rand_y) != MoveType.VERTICAL && rand_y != p.getyCoord())
             {
-                System.out.println("failed vertical check with x val of " + p.getX_coord() + " and y val of " + rand_y);
+                System.out.println("failed vertical check with x val of " + p.getxCoord() + " and y val of " + rand_y);
             }
         }
         for( int i = 0; i < 99; i++)
         {
             int rand_x = rand.nextInt(4) + 5;
             int rand_y = rand.nextInt(7) + 1;
-            if(p.move_type_checker(rand_x,rand_y) == MoveType.VERTICAL)
+            if(p.moveTypeChecker(rand_x,rand_y) == MoveType.VERTICAL)
             {
                 System.out.println("failed vertical check with x val of " + rand_x + " and y val of " + rand_y);
             }
@@ -67,12 +67,12 @@ public class PieceTest {
         {
             int rand_x = rand.nextInt(4);
             int rand_y = rand.nextInt(7) + 1;
-            if(p.move_type_checker(rand_x,rand_y) == MoveType.VERTICAL)
+            if(p.moveTypeChecker(rand_x,rand_y) == MoveType.VERTICAL)
             {
                 System.out.println("failed vertical check with x val of " + rand_x + " and y val of " + rand_y);
             }
         }
-        Board.clear_board();
+        Board.clearBoard();
     }
     private static void test3(){
         //move type checks for horizontal moves
@@ -81,16 +81,16 @@ public class PieceTest {
         for( int i = 0; i < 99; i++)
         {
             int rand_x = rand.nextInt(7) + 1;
-            if(p.move_type_checker(rand_x,p.getY_coord()) != MoveType.HORIZONTAL && rand_x != p.getX_coord())
+            if(p.moveTypeChecker(rand_x,p.getyCoord()) != MoveType.HORIZONTAL && rand_x != p.getxCoord())
             {
-                System.out.println("failed horizontal check with x val of " + rand_x + " and y val of " + p.getY_coord());
+                System.out.println("failed horizontal check with x val of " + rand_x + " and y val of " + p.getyCoord());
             }
         }
         for( int i = 0; i < 99; i++)
         {
             int rand_x = rand.nextInt(7) + 1;
             int rand_y = rand.nextInt(4) + 5;
-            if(p.move_type_checker(rand_x,rand_y) == MoveType.HORIZONTAL)
+            if(p.moveTypeChecker(rand_x,rand_y) == MoveType.HORIZONTAL)
             {
                 System.out.println("failed horizontal check with x val of " + rand_x + " and y val of " + rand_y);
             }
@@ -99,12 +99,12 @@ public class PieceTest {
         {
             int rand_x = rand.nextInt(7) + 1;
             int rand_y = rand.nextInt(4);
-            if(p.move_type_checker(rand_x,rand_y) == MoveType.HORIZONTAL)
+            if(p.moveTypeChecker(rand_x,rand_y) == MoveType.HORIZONTAL)
             {
                 System.out.println("failed horizontal check with x val of " + rand_x + " and y val of " + rand_y);
             }
         }
-        Board.clear_board();
+        Board.clearBoard();
     }
     private static void test4(){
         // move type check for diagonal moves
@@ -112,9 +112,9 @@ public class PieceTest {
         Random rand = new Random();
         for(int i = 0; i < 99; i++){
             int rand_step = rand.nextInt(5) + 1 ;
-            int new_x = p.getX_coord() + rand_step;
-            int new_y = p.getY_coord() + rand_step;
-            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            int new_x = p.getxCoord() + rand_step;
+            int new_y = p.getyCoord() + rand_step;
+            if(p.moveTypeChecker(new_x, new_y) != MoveType.DIAGONAL)
             {
                 System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
                 break;
@@ -122,9 +122,9 @@ public class PieceTest {
         }
         for(int i = 0; i < 99; i++){
             int rand_step = rand.nextInt(5) + 1 ;
-            int new_x = p.getX_coord() - rand_step;
-            int new_y = p.getY_coord() + rand_step;
-            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            int new_x = p.getxCoord() - rand_step;
+            int new_y = p.getyCoord() + rand_step;
+            if(p.moveTypeChecker(new_x, new_y) != MoveType.DIAGONAL)
             {
                 System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
                 break;
@@ -132,9 +132,9 @@ public class PieceTest {
         }
         for(int i = 0; i < 99; i++){
             int rand_step = rand.nextInt(5) + 1 ;
-            int new_x = p.getX_coord() - rand_step;
-            int new_y = p.getY_coord() - rand_step;
-            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            int new_x = p.getxCoord() - rand_step;
+            int new_y = p.getyCoord() - rand_step;
+            if(p.moveTypeChecker(new_x, new_y) != MoveType.DIAGONAL)
             {
                 System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
                 break;
@@ -142,9 +142,9 @@ public class PieceTest {
         }
         for(int i = 0; i < 99; i++){
             int rand_step = rand.nextInt(5) + 1 ;
-            int new_x = p.getX_coord() + rand_step;
-            int new_y = p.getY_coord() - rand_step;
-            if(p.move_type_checker(new_x, new_y) != MoveType.DIAGONAL)
+            int new_x = p.getxCoord() + rand_step;
+            int new_y = p.getyCoord() - rand_step;
+            if(p.moveTypeChecker(new_x, new_y) != MoveType.DIAGONAL)
             {
                 System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
                 break;
@@ -153,15 +153,15 @@ public class PieceTest {
         for(int i = 0; i < 99; i++){
             int rand_step_x = rand.nextInt(8) - 4 ;
             int rand_step_y = rand_step_x + 1 ;
-            int new_x = p.getX_coord() + rand_step_x;
-            int new_y = p.getY_coord() + rand_step_y;
-            if(p.move_type_checker(new_x, new_y) == MoveType.DIAGONAL)
+            int new_x = p.getxCoord() + rand_step_x;
+            int new_y = p.getyCoord() + rand_step_y;
+            if(p.moveTypeChecker(new_x, new_y) == MoveType.DIAGONAL)
             {
                 System.out.println("failed diagonal check with x val of " + new_x + " and y val of " + new_y);
                 break;
             }
         }
-        Board.clear_board();
+        Board.clearBoard();
 
     }
     private static void test5(){
@@ -172,19 +172,19 @@ public class PieceTest {
             int x = rand.nextInt(7) + 1;
             int y = rand.nextInt(7) + 1;
             Piece p = new Knight(x, y, true);
-            if(     p.move_type_checker(x - 2, y + 1) != MoveType.KNIGHT ||
-                    p.move_type_checker(x - 2, y - 1) != MoveType.KNIGHT ||
-                    p.move_type_checker(x - 1, y + 2) != MoveType.KNIGHT ||
-                    p.move_type_checker(x - 1, y - 2) != MoveType.KNIGHT ||
-                    p.move_type_checker(x + 2, y + 1) != MoveType.KNIGHT ||
-                    p.move_type_checker(x + 2, y - 1) != MoveType.KNIGHT ||
-                    p.move_type_checker(x + 1, y + 2) != MoveType.KNIGHT ||
-                    p.move_type_checker(x + 1, y - 2) != MoveType.KNIGHT )
+            if(     p.moveTypeChecker(x - 2, y + 1) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x - 2, y - 1) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x - 1, y + 2) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x - 1, y - 2) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x + 2, y + 1) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x + 2, y - 1) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x + 1, y + 2) != MoveType.KNIGHT ||
+                    p.moveTypeChecker(x + 1, y - 2) != MoveType.KNIGHT )
             {
                 System.out.println("failed knight check");
                 break;
             }
-            Board.clear_board();
+            Board.clearBoard();
         }
 
 
@@ -195,21 +195,21 @@ public class PieceTest {
         Board.white_player = new Player(Board.WHITE);
         Piece attacking_piece = new Rook(0,0,Board.WHITE);
         Piece attacked_piece = new Rook(5,0,Board.BLACK);
-        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
-        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        if(!attacking_piece.move_check(5, 0))
+        Board.board[attacking_piece.getxCoord() + attacking_piece.getyCoord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getxCoord() + attacked_piece.getyCoord() * Board.X_UPPER_BOUND] = attacked_piece;
+        if(!attacking_piece.moveCheck(5, 0))
         {
             System.out.println("failed horizontal move check");
         }
-        Board.clear_board();
+        Board.clearBoard();
         attacking_piece = new Rook(0,0,Board.WHITE);
         attacked_piece = new Rook(5,0,Board.BLACK);
         Piece blocking_piece = new Pawn(4,0,Board.BLACK);
         // horizontal move validity when there is a blocking piece in the path
-        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
-        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
-        if(attacking_piece.move_check(5, 0))
+        Board.board[attacking_piece.getxCoord() + attacking_piece.getyCoord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getxCoord() + attacked_piece.getyCoord() * Board.X_UPPER_BOUND] = attacked_piece;
+        Board.board[blocking_piece.getxCoord() + blocking_piece.getyCoord() * Board.X_UPPER_BOUND] = blocking_piece;
+        if(attacking_piece.moveCheck(5, 0))
         {
             System.out.println("failed horizontal move check");
         }
@@ -220,25 +220,25 @@ public class PieceTest {
         Board.white_player = new Player(Board.WHITE);
         Piece attacking_piece = new Rook(0,0,Board.WHITE);
         Piece attacked_piece = new Rook(0,5,Board.BLACK);
-        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
-        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        if(!attacking_piece.move_check(0,5))
+        Board.board[attacking_piece.getxCoord() + attacking_piece.getyCoord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getxCoord() + attacked_piece.getyCoord() * Board.X_UPPER_BOUND] = attacked_piece;
+        if(!attacking_piece.moveCheck(0,5))
         {
             System.out.println("failed vertical move check");
         }
-        Board.clear_board();
+        Board.clearBoard();
         attacking_piece = new Rook(0,0,Board.WHITE);
         attacked_piece = new Rook(0,5,Board.BLACK);
         Piece blocking_piece = new Pawn(0,4,Board.BLACK);
         // vertical move validity when there is a blocking piece in the path
-        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
-        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
-        if(attacking_piece.move_check(0,5))
+        Board.board[attacking_piece.getxCoord() + attacking_piece.getyCoord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getxCoord() + attacked_piece.getyCoord() * Board.X_UPPER_BOUND] = attacked_piece;
+        Board.board[blocking_piece.getxCoord() + blocking_piece.getyCoord() * Board.X_UPPER_BOUND] = blocking_piece;
+        if(attacking_piece.moveCheck(0,5))
         {
             System.out.println("failed vertical move check");
         }
-        Board.clear_board();
+        Board.clearBoard();
     }
     private static void test8(){
         // diagonal move validity
@@ -246,24 +246,24 @@ public class PieceTest {
         Board.white_player = new Player(Board.WHITE);
         Piece attacking_piece = new Queen(0,0,Board.WHITE);
         Piece attacked_piece = new Queen(5,5,Board.BLACK);
-        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
-        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        if(!attacking_piece.move_check(5,5))
+        Board.board[attacking_piece.getxCoord() + attacking_piece.getyCoord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getxCoord() + attacked_piece.getyCoord() * Board.X_UPPER_BOUND] = attacked_piece;
+        if(!attacking_piece.moveCheck(5,5))
         {
             System.out.println("failed diagonal move check");
         }
-        Board.clear_board();
+        Board.clearBoard();
         attacking_piece = new Queen(0,0,Board.WHITE);
         attacked_piece = new Queen(5,5,Board.BLACK);
         Piece blocking_piece = new Pawn(2,2,Board.BLACK);
-        Board.board[attacking_piece.getX_coord() + attacking_piece.getY_coord() * Board.X_UPPER_BOUND] = attacking_piece;
-        Board.board[attacked_piece.getX_coord() + attacked_piece.getY_coord() * Board.X_UPPER_BOUND] = attacked_piece;
-        Board.board[blocking_piece.getX_coord() + blocking_piece.getY_coord() * Board.X_UPPER_BOUND] = blocking_piece;
-        if(attacking_piece.move_check(5,5))
+        Board.board[attacking_piece.getxCoord() + attacking_piece.getyCoord() * Board.X_UPPER_BOUND] = attacking_piece;
+        Board.board[attacked_piece.getxCoord() + attacked_piece.getyCoord() * Board.X_UPPER_BOUND] = attacked_piece;
+        Board.board[blocking_piece.getxCoord() + blocking_piece.getyCoord() * Board.X_UPPER_BOUND] = blocking_piece;
+        if(attacking_piece.moveCheck(5,5))
         {
             System.out.println("failed diagonal move check");
         }
-        Board.clear_board();
+        Board.clearBoard();
     }
     public static void main(String[] args){
         test1();

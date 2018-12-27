@@ -5,9 +5,9 @@ import Board.*;
 public class King extends Piece {
     public King(int x, int y, boolean p) {
         super(x, y, p);
-        allowed_moves.add(MoveType.HORIZONTAL);
-        allowed_moves.add(MoveType.VERTICAL);
-        allowed_moves.add(MoveType.DIAGONAL);
+        allowedMoves.add(MoveType.HORIZONTAL);
+        allowedMoves.add(MoveType.VERTICAL);
+        allowedMoves.add(MoveType.DIAGONAL);
     }
 
     @Override
@@ -16,40 +16,40 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean move_check(int new_x_coord, int new_y_coord) {
-        boolean valid_move = false;
-        if (Math.abs(this.getX_coord() - new_x_coord) <= 1 && Math.abs(this.getY_coord() - new_y_coord) <= 1) {
-            if (Board.get_piece(new_x_coord, new_y_coord) == null) {
-                this.setIn_starting_pos(false);
-                valid_move = true;
+    public boolean moveCheck(int xDestCoord, int yDestCoord) {
+        boolean isValidMove = false;
+        if (Math.abs(this.getxCoord() - xDestCoord) <= 1 && Math.abs(this.getyCoord() - yDestCoord) <= 1) {
+            if (Board.getPiece(xDestCoord, yDestCoord) == null) {
+                this.setInStartingPosition(false);
+                isValidMove = true;
             } else return false;
         }
         // a castling move
-        if (this.getY_coord() == new_y_coord && (Math.abs(this.getX_coord() - new_x_coord) == 2)) {
+        if (this.getyCoord() == yDestCoord && (Math.abs(this.getxCoord() - xDestCoord) == 2)) {
             /*
             the king and the rook has'nt moved, there is no need to check if the other piece is a rook
             or if the piece is the same color of the king, because if it isn't than it has obliviously moved*/
-            Player cur = Board.get_player(this.getColor());
+            Player currentPlayer = Board.getPlayer(this.getColor());
             // cant castle if king is checked
-            if (cur.isChecked()) return false;
-            int step = (new_x_coord > this.getX_coord()) ? 1 : -1;
-            int rook_x_coord = step == 1 ? 7 : 0;
-            if (this.isIn_starting_pos() && Board.get_piece(rook_x_coord, new_y_coord).isIn_starting_pos()) {
-                Player enemy = Board.get_player(!this.getColor());
-                for (int i = this.getX_coord() + step; i != new_x_coord + step; i += step) {
+            if (currentPlayer.isChecked()) return false;
+            int step = (xDestCoord > this.getxCoord()) ? 1 : -1;
+            int rookXCoord = step == 1 ? 7 : 0;
+            if (this.isInStartingPosition() && Board.getPiece(rookXCoord, yDestCoord).isInStartingPosition()) {
+                Player enemy = Board.getPlayer(!this.getColor());
+                for (int i = this.getxCoord() + step; i != xDestCoord + step; i += step) {
                     // first part checks that the path to the rook is empty
                     // second part checks that the path isn't threatened by the enemy player
-                    if (Board.get_piece(i, new_y_coord) != null || Board.is_under_threat(i, new_y_coord, enemy.getPiece_list())) {
+                    if (Board.getPiece(i, yDestCoord) != null || Board.isUnderThreat(i, yDestCoord, enemy.getpieceList())) {
                         return false;
                     }
                 }
-                Piece king = Board.get_piece(this.getX_coord(), this.getY_coord());
-                Piece rook = Board.board[rook_x_coord + Board.X_UPPER_BOUND * this.getY_coord()];
-                king.setXYcoord(new_x_coord, new_y_coord);
-                rook.setXYcoord(new_x_coord - step, rook.getY_coord());
+                Piece king = Board.getPiece(this.getxCoord(), this.getyCoord());
+                Piece rook = Board.board[rookXCoord + Board.X_UPPER_BOUND * this.getyCoord()];
+                king.setXYcoord(xDestCoord, yDestCoord);
+                rook.setXYcoord(xDestCoord - step, rook.getyCoord());
                 return true;
             }
         }
-        return valid_move;
+        return isValidMove;
     }
 }

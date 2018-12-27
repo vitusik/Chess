@@ -11,12 +11,12 @@ public class PawnTest {
         int rand_x = rand.nextInt(8);
         int rand_y = rand.nextInt(6 ) + 1;
         Piece p1 = new Pawn(rand_x,rand_y, p);
-        Board.board[p1.getX_coord() + p1.getY_coord() * Board.X_UPPER_BOUND] = p1;
-        if(!p1.move_check(rand_x,rand_y + step))
+        Board.board[p1.getxCoord() + p1.getyCoord() * Board.X_UPPER_BOUND] = p1;
+        if(!p1.moveCheck(rand_x,rand_y + step))
         {
             System.out.println("failed simple Pawn 1 step");
         }
-        Board.clear_board();
+        Board.clearBoard();
     }
     public static void test2()
     {
@@ -26,12 +26,12 @@ public class PawnTest {
         int rand_y = p? 6 : 1;
         int step = p? -2 : 2;
         Piece p1 = new Pawn(rand_x,rand_y, p);
-        Board.board[p1.getX_coord() + p1.getY_coord() * Board.X_UPPER_BOUND] = p1;
-        if(!p1.move_check(rand_x,rand_y + step))
+        Board.board[p1.getxCoord() + p1.getyCoord() * Board.X_UPPER_BOUND] = p1;
+        if(!p1.moveCheck(rand_x,rand_y + step))
         {
             System.out.println("failed simple Pawn 2 step");
         }
-        Board.clear_board();
+        Board.clearBoard();
     }
     public static void test3()
     {
@@ -51,18 +51,18 @@ public class PawnTest {
         int y_side_of_attack = p? -1:1;
         Piece attacking_pawn = new Pawn(rand_x, rand_y, p);
         Piece attacked_pawn = new Pawn(rand_x + x_side_of_attack, rand_y + y_side_of_attack, !p);
-        Board.board[attacked_pawn.getX_coord() + attacked_pawn.getY_coord() * Board.X_UPPER_BOUND] = attacked_pawn;
-        Board.board[attacking_pawn.getX_coord() + attacking_pawn.getY_coord() * Board.X_UPPER_BOUND] = attacking_pawn;
-        if(!attacking_pawn.move_check(rand_x + x_side_of_attack, rand_y + y_side_of_attack))
+        Board.board[attacked_pawn.getxCoord() + attacked_pawn.getyCoord() * Board.X_UPPER_BOUND] = attacked_pawn;
+        Board.board[attacking_pawn.getxCoord() + attacking_pawn.getyCoord() * Board.X_UPPER_BOUND] = attacking_pawn;
+        if(!attacking_pawn.moveCheck(rand_x + x_side_of_attack, rand_y + y_side_of_attack))
         {
             System.out.println("failed attack move");
         }
-        Board.clear_board();
+        Board.clearBoard();
 
     }
     public static void main(String[] args){
-        Board.board_init();
-        Board.clear_board();
+        Board.boardInit();
+        Board.clearBoard();
         for (int i = 0; i< 100;i++)
         {
             test1();

@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public abstract class Piece {
 
-    private int x_coord;
-    private int y_coord;
+    private int xCoord;
+    private int yCoord;
     private boolean color;
-    private boolean in_starting_pos;
-    ArrayList<MoveType> allowed_moves;
+    private boolean inStartingPosition;
+    ArrayList<MoveType> allowedMoves;
 
     @Override
     public abstract String toString();
@@ -22,98 +22,106 @@ public abstract class Piece {
      * @param c boolean parameter which represents the color of the player true for black player, false for white
      */
     public Piece(int x, int y, boolean c) {
-        x_coord = x;
-        y_coord = y;
+        xCoord = x;
+        yCoord = y;
         color = c;
-        allowed_moves = new ArrayList<>();
-        in_starting_pos = true;
+        allowedMoves = new ArrayList<>();
+        inStartingPosition = true;
         Board.board[x + Board.X_UPPER_BOUND * y] = this;
     }
+    
     /**
-     * x coordinate getter
+     * Getter for the x coordinate of the piece 
      * @return the x coordinate of the piece
      */
-    public int getX_coord() {
-        return x_coord;
+    public int getxCoord() {
+        return xCoord;
     }
 
     /**
-     * x coordinate setter
-     * @param x_coord the new x coordinate of the piece
+     * Setter for the x coordinate of the piece 
+     * @param xCoord the new x coordinate of the piece
      */
-    public void setX_coord(int x_coord) {
-        this.x_coord = x_coord;
+    private void setxCoord(int xCoord) {
+        this.xCoord = xCoord;
     }
+    
     /**
-     * y coordinate getter
-     * @return the y coordinate of the piece
+     * Getter for the y coordinate of the piece 
+     * @return the y coordinate of the piece 
      */
-    public int getY_coord() {
-        return y_coord;
+    public int getyCoord() {
+        return yCoord;
     }
+    
     /**
-     * y coordinate setter
-     * @param y_coord the new y coordinate of the piece
+     * Setter for the y coordinate of the piece 
+     * @param yCoord the new y coordinate of the piece
      */
-    public void setY_coord(int y_coord) {
-        this.y_coord = y_coord;
+    private void setyCoord(int yCoord) {
+        this.yCoord = yCoord;
     }
 
-    public void setXYcoord(int x, int y)
-    {
-        Board.board[this.x_coord + Board.X_UPPER_BOUND * this.y_coord] = null;
-        this.setX_coord(x);
-        this.setY_coord(y);
-        Board.board[this.x_coord + Board.X_UPPER_BOUND * this.y_coord] = this;
+    /** Method which updates the XY coordinates on a piece and updates the board inside the Board class.
+     * 
+     * @param x the new x coordinate
+     * @param y the new y coordinate
+     */
+    public void setXYcoord(int x, int y) {
+        Board.board[this.xCoord + Board.X_UPPER_BOUND * this.yCoord] = null;
+        this.setxCoord(x);
+        this.setyCoord(y);
+        Board.board[this.xCoord + Board.X_UPPER_BOUND * this.yCoord] = this;
     }
+    
     /**
-     * player type getter
-     * @return a boolean value which represents the type of the player
+     * Getter for the color of the player
+     * @return a boolean value which represents the color of the player
      */
     public boolean getColor() {
         return color;
     }
 
     /**
-     * player type setter
-     * @param player boolean which represents the type of the player
+     * Getter for the boolean value which indicates in the piece is in it's starting position
+     * @return boolean value which indicates in the piece is in it's starting position
      */
-    public void setColor(boolean player) {
-        this.color = player;
+    boolean isInStartingPosition() {
+        return inStartingPosition;
     }
 
-    boolean isIn_starting_pos() {
-        return in_starting_pos;
-    }
-
-    void setIn_starting_pos(boolean in_starting_pos) {
-        this.in_starting_pos = in_starting_pos;
+    /**
+     * Setter for the boolean value which indicates in the piece is in it's starting position
+     * @param inStartingPosition boolean value which indicates in the piece is in it's starting position
+     */
+    void setInStartingPosition(boolean inStartingPosition) {
+        this.inStartingPosition = inStartingPosition;
     }
 
     /**
      * method which takes new (x,y) position and returns the type of move that can be made from the current position
      * to get to the new position
-     * @param end_x_coord the new x coordinate of the piece
-     * @param end_y_coord the new y coordinate of the piece
+     * @param destXCoord the new x coordinate of the piece
+     * @param destYCoord the new y coordinate of the piece
      * @return returns a MoveType enum member, which represents horizontal, vertical, diagonal or knight move, or an
      * illegal move
      */
-    public MoveType move_type_checker(int end_x_coord, int end_y_coord) {
-        if (this.x_coord != end_x_coord && this.y_coord == end_y_coord) {
+    public MoveType moveTypeChecker(int destXCoord, int destYCoord) {
+        if (this.xCoord != destXCoord && this.yCoord == destYCoord) {
             return MoveType.HORIZONTAL;
         }
-        if (this.x_coord == end_x_coord && this.y_coord != end_y_coord) {
+        if (this.xCoord == destXCoord && this.yCoord != destYCoord) {
             return MoveType.VERTICAL;
         }
-        if (this.x_coord != end_x_coord && this.y_coord != end_y_coord)
+        if (this.xCoord != destXCoord && this.yCoord != destYCoord)
         {
-            if (Math.abs(end_x_coord - this.x_coord) == Math.abs(end_y_coord - this.y_coord)) {
+            if (Math.abs(destXCoord - this.xCoord) == Math.abs(destYCoord - this.yCoord)) {
                 return MoveType.DIAGONAL;
             }
             // knight move creates a circle around the knight with the radius of 3, excluding horizontal, vertical and
             // diagonal positions on the circle relative to the knight
             // at this point of execution horizontal, vertical and vertical moves have been excluded
-            if(Math.abs(end_x_coord - this.x_coord) + Math.abs(end_y_coord - this.y_coord) == 3) {
+            if(Math.abs(destXCoord - this.xCoord) + Math.abs(destYCoord - this.yCoord) == 3) {
                 return MoveType.KNIGHT;
             }
         }
@@ -121,112 +129,123 @@ public abstract class Piece {
     }
 
     /**
-     * method which checks validity of a vertical move which ends at (current x coordinate, new_y_coord)
-     * @param new_y_coord the end y coordinate of the vertical move
+     * method which checks validity of a vertical move which ends at (current x coordinate, destYCoord)
+     * @param destYCoord the end y coordinate of the vertical move
      * @return true if the move is legal, meaning there aren't any blocking pieces in the way, and that at the end
      * position there is an enemy piece or empty cell
      */
-    private boolean vertical_move_check(int new_y_coord) {
-        int step = (new_y_coord > this.y_coord)? 1 : -1;
-        for (int i = this.y_coord + step ; i != new_y_coord; i += step)
+    private boolean verticalMoveCheck(int destYCoord) {
+        int step = (destYCoord > this.yCoord)? 1 : -1;
+        for (int i = this.yCoord + step ; i != destYCoord; i += step)
         {
-            if (Board.get_piece(this.x_coord, i) != null)
+            if (Board.getPiece(this.xCoord, i) != null)
             {
                 return false;
             }
         }
-        if (Board.get_piece(this.x_coord, new_y_coord) == null) {
+        if (Board.getPiece(this.xCoord, destYCoord) == null) {
             return true;
         } else
         {
-            Piece temp = Board.get_piece(this.x_coord, new_y_coord);
+            Piece temp = Board.getPiece(this.xCoord, destYCoord);
             return temp.getColor() != this.getColor();
         }
     }
 
     /**
-     * method which checks validity of a horizontal move which ends at (new_x_coord, current y coordinate)
-     * @param new_x_coord the end x coordinate of the horizontal move
+     * method which checks validity of a horizontal move which ends at (destXCoord, current y coordinate)
+     * @param destXCoord the end x coordinate of the horizontal move
      * @return true if the move is legal, meaning there aren't any blocking pieces in the way, and that at the end
      * position there is an enemy piece or empty cell
      */
-    private boolean horizontal_move_check(int new_x_coord) {
-        int step = (new_x_coord > this.x_coord)? 1 : -1;
-        for (int i = this.x_coord + step ; i != new_x_coord; i += step)
+    private boolean horizontalMoveCheck(int destXCoord) {
+        int step = (destXCoord > this.xCoord)? 1 : -1;
+        for (int i = this.xCoord + step ; i != destXCoord; i += step)
         {
-            if (Board.get_piece(i, this.y_coord) != null)
+            if (Board.getPiece(i, this.yCoord) != null)
             {
                 return false;
             }
         }
-        if (Board.get_piece(new_x_coord, this.y_coord) == null) {
+        if (Board.getPiece(destXCoord, this.yCoord) == null) {
             return true;
         } else
         {
-            Piece temp = Board.get_piece(new_x_coord, this.y_coord);
+            Piece temp = Board.getPiece(destXCoord, this.yCoord);
             return temp.getColor() != this.getColor();
         }
     }
 
     /**
-     * method which checks validity of a diagonal move which ends at (new_x_coord, new_y_coord)
-     * @param new_x_coord the end x coordinate of the diagonal move
-     * @param new_y_coord the end y coordinate of the diagonal move
+     * method which checks validity of a diagonal move which ends at (destXCoord, destYCoord)
+     * @param destXCoord the end x coordinate of the diagonal move
+     * @param destYCoord the end y coordinate of the diagonal move
      * @return true if the move is legal, meaning there aren't any blocking pieces in the way, and that at the end
      * position there is an enemy piece or empty cell
      */
-    private boolean diagonal_move_check(int new_x_coord, int new_y_coord) {
-        int step_x = (new_x_coord > this.x_coord)? 1 : -1;
-        int step_y = (new_y_coord > this.y_coord)? 1 : -1;
-        int j = this.y_coord + step_y;
-        for (int i = this.x_coord + step_x ; i != new_x_coord; i += step_x)
+    private boolean diagonalMoveCheck(int destXCoord, int destYCoord) {
+        int step_x = (destXCoord > this.xCoord)? 1 : -1;
+        int step_y = (destYCoord > this.yCoord)? 1 : -1;
+        int j = this.yCoord + step_y;
+        for (int i = this.xCoord + step_x ; i != destXCoord; i += step_x)
         {
-            if (Board.get_piece(i, j) != null)
+            if (Board.getPiece(i, j) != null)
             {
                 return false;
             }
             j += step_y;
         }
-        if (Board.get_piece(new_x_coord, new_y_coord) == null) {
+        if (Board.getPiece(destXCoord, destYCoord) == null) {
             return true;
         } else
         {
-            Piece temp = Board.get_piece(new_x_coord, new_y_coord);
+            Piece temp = Board.getPiece(destXCoord, destYCoord);
             return temp.getColor() != this.getColor();
         }
     }
 
     /**
      * method which checks the validity of a knight type move
-     * @param new_x_coord the end x coordinate of the diagonal move
-     * @param new_y_coord the end y coordinate of the diagonal move
+     * @param destXCoord the end x coordinate of the diagonal move
+     * @param destYCoord the end y coordinate of the diagonal move
      * @return true if there is an enemy piece at the end position or an empty cell
      */
-    private boolean knight_move_check(int new_x_coord, int new_y_coord) {
-        return this.getColor() != Board.get_piece(new_x_coord, new_y_coord).getColor();
+    private boolean knighMoveCheck(int destXCoord, int destYCoord) {
+        return this.getColor() != Board.getPiece(destXCoord, destYCoord).getColor();
     }
 
-
-    boolean make_move_and_update(int new_x_coord, int new_y_coord, int king_x, int king_y){
-        Piece piece_in_final_positon = Board.get_piece(new_x_coord, new_y_coord);
-        boolean empty_tile = piece_in_final_positon == null;
-        int cur_x = this.getX_coord();
-        int cur_y = this.getY_coord();
-        this.setXYcoord(new_x_coord, new_y_coord);
-        ArrayList<Piece> threats = this.color? Board.white_player.getPiece_list(): Board.black_player.getPiece_list();
-        if(Board.is_under_threat(king_x, king_y, threats))
+    /**
+     * Method that moves the calling piece to the destination coordinates, and then checks if the calling piece's king
+     * piece is under threat from enemy piece, if so it undoes the change.
+     * @param destXCoord the destination's x coordinate of the calling piece 
+     * @param destYCoord the destination's y coordinate of the calling piece
+     * @param kingXCoord the x coordinate of the calling piece's king 
+     * @param kingYCoord the y coordinate of the calling piece's king 
+     * @return true in case the move is successful, false in case the calling piece's king is under threat 
+     */
+    private boolean movePieceOnBoard(int destXCoord, int destYCoord, int kingXCoord, int kingYCoord){
+        Piece pieceInDestCoords = Board.getPiece(destXCoord, destYCoord);
+        // in case there is no piece in the destination, we keep a boolean flag
+        boolean emptyTile = pieceInDestCoords == null;
+        int currentX = this.getxCoord();
+        int currentY = this.getyCoord();
+        this.setXYcoord(destXCoord, destYCoord);
+        ArrayList<Piece> threats = Board.getPlayer(!this.getColor()).getpieceList();
+        if(Board.isUnderThreat(kingXCoord, kingYCoord, threats))
         {
-            this.setXYcoord(cur_x, cur_y);
-            if(!empty_tile) piece_in_final_positon.setXYcoord(new_x_coord, new_y_coord);
+            this.setXYcoord(currentX, currentY);
+            if(!emptyTile) pieceInDestCoords.setXYcoord(destXCoord, destYCoord);
             return false;
         }
-        if(!empty_tile)
+        if(!emptyTile)
         {
-            Player p = piece_in_final_positon.getColor()? Board.black_player:Board.white_player;
-            ArrayList<Piece> list_of_pieces = p.getPiece_list();
+            // in case the destination coordinates aren't empty, there is a need to remove the reference to that piece
+            // from the list of pieces of the enemy's list
+            Player p = Board.getPlayer(!this.getColor());
+            ArrayList<Piece> list_of_pieces = p.getpieceList();
             for(int i = 0; i < list_of_pieces.size(); i++)
             {
-                if (list_of_pieces.get(i) == piece_in_final_positon)
+                if (list_of_pieces.get(i) == pieceInDestCoords)
                 {
                     list_of_pieces.remove(i);
                     break;
@@ -238,63 +257,59 @@ public abstract class Piece {
 
     /**
      * method which encapsulates all the previous methods and call the correct move validity check method
-     * @param new_x_coord the end x coordinate of the move
-     * @param new_y_coord the end y coordinate of the move
-     * @return true if the move is legal, meaning its not out of bounds, the calling piece can make that type of move
-     * and the move is valid
+     * @param destXCoord the end x coordinate of the move
+     * @param destYCoord the end y coordinate of the move
+     * @return true if the move is legal, meaning the calling piece can make that type of move and that the path
+     * of move is clear
      */
-    public boolean move_check(int new_x_coord, int new_y_coord){
-        MoveType cur_move = this.move_type_checker(new_x_coord, new_y_coord);
-        boolean valid_move = false;
-        if(!Board.bound_check(new_x_coord, new_y_coord))
+    public boolean moveCheck(int destXCoord, int destYCoord){
+        MoveType curMoveType = this.moveTypeChecker(destXCoord, destYCoord);
+        boolean isValidMove = false;
+        if(!this.allowedMoves.contains(curMoveType))
         {
             return false;
         }
-        if(!this.allowed_moves.contains(cur_move))
-        {
-            return false;
-        }
-        switch (cur_move){
+        switch (curMoveType){
             case HORIZONTAL:
-                valid_move = this.horizontal_move_check(new_x_coord);
+                isValidMove = this.horizontalMoveCheck(destXCoord);
                 break;
             case VERTICAL:
-                valid_move = this.vertical_move_check(new_y_coord);
+                isValidMove = this.verticalMoveCheck(destYCoord);
                 break;
             case DIAGONAL:
-                valid_move = this.diagonal_move_check(new_x_coord, new_y_coord);
+                isValidMove = this.diagonalMoveCheck(destXCoord, destYCoord);
                 break;
             case KNIGHT:
-                valid_move = this.knight_move_check(new_x_coord, new_y_coord);
+                isValidMove = this.knighMoveCheck(destXCoord, destYCoord);
                 break;
             case NO_MOVE:
                 break;
         }
-        if (valid_move && in_starting_pos) in_starting_pos = false;
-        return valid_move;
+        if (isValidMove && inStartingPosition) inStartingPosition = false;
+        return isValidMove;
     }
 
-    public boolean make_move(int new_x_coord, int new_y_coord){
-        boolean valid_move = this.move_check(new_x_coord, new_y_coord);
-        if(valid_move)
+    public boolean makeMove(int destXCoord, int destYCoord){
+        boolean isValidMove = this.moveCheck(destXCoord, destYCoord);
+        if(isValidMove)
         {
-            int king_x = Board.get_player(this.getColor()).getKing_x_coord();
-            int king_y = Board.get_player(this.getColor()).getKing_y_coord();
-            boolean king_move = (this.getX_coord() == king_x) && (this.getY_coord() == king_y);
+            int kingXCoord = Board.getPlayer(this.getColor()).getkingXCoord();
+            int kingYCoord = Board.getPlayer(this.getColor()).getkingYCoord();
+            boolean king_move = (this.getxCoord() == kingXCoord) && (this.getyCoord() == kingYCoord);
             if(king_move)
             {
-                valid_move = this.make_move_and_update(new_x_coord, new_y_coord, new_x_coord, new_y_coord);
-                if(valid_move)
+                isValidMove = this.movePieceOnBoard(destXCoord, destYCoord, destXCoord, destYCoord);
+                if(isValidMove)
                 {
-                    if (this.getColor()) Board.black_player.setKing_x_y_coord(new_x_coord, new_y_coord);
-                    else Board.white_player.setKing_x_y_coord(new_x_coord, new_y_coord);
+                    if (this.getColor()) Board.black_player.setKingXYCoords(destXCoord, destYCoord);
+                    else Board.white_player.setKingXYCoords(destXCoord, destYCoord);
                 }
             }
             else
             {
-                valid_move = this.make_move_and_update(new_x_coord, new_y_coord, king_x, king_y);
+                isValidMove = this.movePieceOnBoard(destXCoord, destYCoord, kingXCoord, kingYCoord);
             }
         }
-        return valid_move;
+        return isValidMove;
     }
 }

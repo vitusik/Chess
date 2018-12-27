@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Player {
     private boolean color;
-    private ArrayList<Piece> piece_list;
+    private ArrayList<Piece> pieceList;
     private boolean checked;
-    private int king_x_coord;
-    private int king_y_coord;
+    private int kingXCoord;
+    private int kingYCoord;
 
     public boolean isChecked() {
         return checked;
@@ -19,40 +19,40 @@ public class Player {
         this.checked = checked;
     }
 
-    public int getKing_x_coord() {
-        return king_x_coord;
+    public int getkingXCoord() {
+        return kingXCoord;
     }
 
-    public void setKing_x_coord(int king_x_coord) {
-        this.king_x_coord = king_x_coord;
+    public void setkingXCoord(int kingXCoord) {
+        this.kingXCoord = kingXCoord;
     }
 
-    public int getKing_y_coord() {
-        return king_y_coord;
+    public int getkingYCoord() {
+        return kingYCoord;
     }
 
-    public void setKing_y_coord(int king_y_coord) {
-        this.king_y_coord = king_y_coord;
+    public void setkingYCoord(int kingYCoord) {
+        this.kingYCoord = kingYCoord;
     }
 
-    public void setKing_x_y_coord(int x, int y)
+    public void setKingXYCoords(int x, int y)
     {
-        this.setKing_x_coord(x);
-        this.setKing_y_coord(y);
+        this.setkingXCoord(x);
+        this.setkingYCoord(y);
     }
 
     public Player(boolean color) {
         this.color = color;
         this.checked = false;
-        this.piece_list = new ArrayList<>();
+        this.pieceList = new ArrayList<>();
     }
 
-    public void setPiece_list(ArrayList<Piece> piece_list) {
-        this.piece_list = piece_list;
+    public void setpieceList(ArrayList<Piece> pieceList) {
+        this.pieceList = pieceList;
     }
 
-    public ArrayList<Piece> getPiece_list(){
-        return this.piece_list;
+    public ArrayList<Piece> getpieceList(){
+        return this.pieceList;
     }
 
 }

@@ -17,18 +17,25 @@ public class Board {
     public static Player white_player = new Player(WHITE);
     public static Player black_player = new Player(BLACK);
 
-    public static void clear_board(){
+    /**
+     * Method which clears the board array, and clears the players pieces lists
+     */
+    public static void clearBoard(){
         for(int i = 0; i < Board.X_UPPER_BOUND * Board.Y_UPPER_BOUND ; i++){
             Board.board[i] = null;
         }
-        white_player.setPiece_list(null);
-        black_player.setPiece_list(null);
+        white_player.setpieceList(null);
+        black_player.setpieceList(null);
     }
 
-    public static void board_init() {
+    /**
+     * Method which initializes the board object, including creating all the pieces and inserting them in the correct 
+     * piece list, and placing the pieces on the board
+     */
+    public static void boardInit() {
         ArrayList<Piece> white_piece_list = new ArrayList<>();
         ArrayList<Piece> black_piece_list = new ArrayList<>();
-        ArrayList<Piece> piece_array = PieceFactory.create_pieces();
+        ArrayList<Piece> piece_array = PieceFactory.createPieces();
         for(Piece p : piece_array)
         {
             if(p.getColor())
@@ -40,74 +47,93 @@ public class Board {
                 white_piece_list.add(p);
             }
         }
-        white_player.setPiece_list(white_piece_list);
-        white_player.setKing_x_y_coord(PieceFactory.KING_INITIAL_X, PieceFactory.INITAL_Y_COORD_WHITE_PLAYER_OTHER);
-        black_player.setPiece_list(black_piece_list);
-        black_player.setKing_x_y_coord(PieceFactory.KING_INITIAL_X, PieceFactory.INITAL_Y_COORD_WHITE_PLAYER_OTHER + PieceFactory.DIST_BETWEEN_PIECES);
+        white_player.setpieceList(white_piece_list);
+        white_player.setKingXYCoords(PieceFactory.KING_INITIAL_X, PieceFactory.INITAL_Y_COORD_WHITE_PLAYER_OTHER);
+        black_player.setpieceList(black_piece_list);
+        black_player.setKingXYCoords(PieceFactory.KING_INITIAL_X, PieceFactory.INITAL_Y_COORD_WHITE_PLAYER_OTHER + PieceFactory.DIST_BETWEEN_PIECES);
     }
 
-    public static void print_board() {
-        int seperatorLen = 67;
-        StringBuilder board_string = new StringBuilder();
-        board_string.append(new String(new char [seperatorLen]).replace("\0","*"));
-        board_string.append("\n");
+    /**
+     * Method which prints the board's current state onto the console
+     */
+    public static void printBoard() {
+        int separatorLen = 67;
+        StringBuilder boardString = new StringBuilder();
+        boardString.append(new String(new char [separatorLen]).replace("\0","*"));
+        boardString.append("\n");
         for(int y = Y_UPPER_BOUND - 1; y >= 0; y--)
         {
-            board_string.append(y + 1).append(" ");
-            board_string.append("*");
+            boardString.append(y + 1).append(" ");
+            boardString.append("*");
             for (int x = 0; x < X_UPPER_BOUND; x++)
             {
                 Piece p = Board.board[x + y * X_UPPER_BOUND];
                 if(p != null)
                 {
-                    board_string.append("  ").append(p).append(p.getColor()? "-B":"-W").append(" ").append((p.toString().length() == 1? " ":""));
+                    boardString.append("  ").append(p).append(p.getColor()? "-B":"-W").append(" ").append((p.toString().length() == 1? " ":""));
                 }
                 else
                 {
-                    board_string.append("       ");
+                    boardString.append("       ");
                 }
-                board_string.append("*");
+                boardString.append("*");
             }
-            board_string.append("\n").append((new String(new char [seperatorLen]).replace("\0","*"))).append("\n");
+            boardString.append("\n").append((new String(new char [separatorLen]).replace("\0","*"))).append("\n");
         }
-        board_string.append("  ");
+        boardString.append("  ");
         for(char c = 'A'; c <= 'H';c++ )
         {
-            board_string.append("*   ").append(c).append("   ");
+            boardString.append("*   ").append(c).append("   ");
         }
-        board_string.append("*\n");
-        System.out.println(board_string);
+        boardString.append("*\n");
+        System.out.println(boardString);
     }
 
-    public static Piece get_piece(int x, int y)
+    /**
+     * Method which receives xy coordinates and returns the Piece that is in that xy coordinate 
+     * @param x the x coordinate of the piece 
+     * @param y the y coordinate of the piece
+     * @return Piece that is in that xy coordinate, Null in case the xy coordinate doesn't hold a Piece object
+     */
+    public static Piece getPiece(int x, int y)
     {
         return Board.board[x + X_UPPER_BOUND * y];
     }
 
     /**
      * method which checks if the given (x,y) coordinate is within the bounds of the board
-     * @param x_coord the x coordinate
-     * @param y_coord the y coordinate
+     * @param xCoord the x coordinate
+     * @param yCoord the y coordinate
      * @return true if the coordinate is in bounds
      */
-    public static boolean bound_check(int x_coord, int y_coord) {
+    public static boolean boundCheck(int xCoord, int yCoord) {
         // the x,y coordinates ranges between 0 and 7 in the board array and because of that they need to be adjusted
-        return (x_coord + 1 <= Board.X_UPPER_BOUND && x_coord + 1 >= Board.X_LOWER_BOUND &&
-                y_coord + 1 <= Board.Y_UPPER_BOUND && y_coord + 1 >= Board.Y_LOWER_BOUND);
+        return (xCoord + 1 <= Board.X_UPPER_BOUND && xCoord + 1 >= Board.X_LOWER_BOUND &&
+                yCoord + 1 <= Board.Y_UPPER_BOUND && yCoord + 1 >= Board.Y_LOWER_BOUND);
     }
 
-    public static Player get_player(boolean color){
+    /**
+     * Method that returns the Player that corresponds to the right color
+     * @param color the color of the player 
+     * @return Player
+     */
+    public static Player getPlayer(boolean color){
         if(color == BLACK) return black_player;
         return white_player;
     }
 
-    public static boolean is_under_threat(int x, int y, ArrayList<Piece> possible_threats){
-        if (possible_threats == null) return false;
-        for(Piece piece : possible_threats)
+    /**
+     * Method that checks if a xy coordinate is under threat from other pieces 
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param listOfThreats list of pieces which could possibly threat the desired xy coordinate
+     * @return true if the given xy coordinate is threatened by at least one piece from the threats list
+     */
+    public static boolean isUnderThreat(int x, int y, ArrayList<Piece> listOfThreats){
+        if (listOfThreats == null) return false;
+        for(Piece piece : listOfThreats)
         {
-            int cur_x = piece.getX_coord();
-            int cur_y = piece.getY_coord();
-            if(piece.move_check(x, y)) return true;
+            if(piece.moveCheck(x, y)) return true;
         }
         return false;
     }
