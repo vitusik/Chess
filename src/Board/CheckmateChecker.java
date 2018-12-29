@@ -24,22 +24,22 @@ public class CheckmateChecker {
             for(MoveType move: p.getAllowedMoves()){
                 switch (move){
                     case VERTICAL:
-                        if(!vertCheck(p, UP) || !vertCheck(p, DOWN)) return true;
+                        if(vertCheck(p, UP) || vertCheck(p, DOWN)) return false;
                         break;
                     case HORIZONTAL:
-                        if(!horizontalCheck(p, RIGHT) || !horizontalCheck(p, LEFT)) return true;
+                        if(horizontalCheck(p, RIGHT) || horizontalCheck(p, LEFT)) return false;
                         break;
                     case DIAGONAL:
-                        if(!diagonoalCheck(p, RIGHT, UP) || !diagonoalCheck(p, LEFT, UP) ||
-                            !diagonoalCheck(p, RIGHT, DOWN) || !diagonoalCheck(p, LEFT, DOWN)) return true;
+                        if(diagonoalCheck(p, RIGHT, UP) || diagonoalCheck(p, LEFT, UP) ||
+                            diagonoalCheck(p, RIGHT, DOWN) || diagonoalCheck(p, LEFT, DOWN)) return false;
                         break;
                     case KNIGHT:
-                        if (!knigtCheck(p)) return true;
+                        if (knigtCheck(p)) return false;
                         break;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -51,8 +51,8 @@ public class CheckmateChecker {
     private static boolean vertCheck(Piece current, boolean direction){
         int initialYCoord = current.getyCoord();
         int step = direction? 1: -1;
-        int yBound = direction? Board.Y_UPPER_BOUND: Board.Y_LOWER_BOUND;
-        for(int i = current.getyCoord() + step; i != yBound; i += yBound){
+        int i = current.getyCoord() + step;
+        while(i < Board.Y_UPPER_BOUND && i >= Board.Y_LOWER_BOUND - 1){
             Piece potentialPiece = Board.getPiece(current.getxCoord(), i);
             if(potentialPiece == null)
             {
@@ -74,6 +74,7 @@ public class CheckmateChecker {
                 // if there is a piece in the tile, there is no need to check another one, since its blocked
                 return false;
             }
+            i += step;
         }
         return false;
     }
@@ -87,8 +88,8 @@ public class CheckmateChecker {
     private static boolean horizontalCheck(Piece current, boolean direction){
         int initialXCoord = current.getxCoord();
         int step = direction? 1: -1;
-        int xBound = direction? Board.X_UPPER_BOUND: Board.X_LOWER_BOUND;
-        for(int i = current.getxCoord() + step; i != xBound; i += xBound){
+        int i = current.getxCoord() + step;
+        while(i < Board.X_UPPER_BOUND && i >= Board.X_LOWER_BOUND - 1){
             Piece potentialPiece = Board.getPiece(i, current.getyCoord());
             if(potentialPiece == null)
             {
@@ -110,6 +111,7 @@ public class CheckmateChecker {
                 // if there is a piece in the tile, there is no need to check another one, since its blocked
                 return false;
             }
+            i += step;
         }
         return false;
     }
@@ -126,11 +128,9 @@ public class CheckmateChecker {
         int initialYCoord = current.getyCoord();
         int xStep = xDirection? 1: -1;
         int yStep = yDirection? 1: -1;
-        int xBound = xDirection? Board.X_UPPER_BOUND: Board.X_LOWER_BOUND;
-        int yBound = yDirection? Board.Y_UPPER_BOUND: Board.Y_LOWER_BOUND;
         int i = initialXCoord + xStep;
         int j = initialYCoord + yStep;
-        while(i != xBound && j != yBound){
+        while((i < Board.X_UPPER_BOUND && i >= Board.X_LOWER_BOUND - 1) && (j < Board.Y_UPPER_BOUND && j >= Board.Y_LOWER_BOUND - 1)){
             Piece potentialPiece = Board.getPiece(i, j);
             if(potentialPiece == null)
             {
