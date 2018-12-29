@@ -99,6 +99,14 @@ public abstract class Piece {
     }
 
     /**
+     * Getter for the list of move types that the piece can make
+     * @return list of move types that the piece can make
+     */
+    public ArrayList<MoveType> getAllowedMoves() {
+        return allowedMoves;
+    }
+
+    /**
      * method which takes new (x,y) position and returns the type of move that can be made from the current position
      * to get to the new position
      * @param destXCoord the new x coordinate of the piece
