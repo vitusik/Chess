@@ -13,29 +13,70 @@ public class CheckmateChecker {
 
     /**
      * Method that checks if a player can continue playing or that he's lost
-     * @param player the player we wish to check
+     * @param color the color of the player we wish to check
      * @return true in case there is a checkmate in the game
      */
-    public static boolean lookForCheckmate(Player player)
+    public static boolean lookForCheckmate(boolean color)
     {
         // this method is basically a brute force search
+        Player player = Board.getPlayer(color);
         ArrayList<Piece> curPlayerListOfPieces = player.getpieceList();
         for(Piece p : curPlayerListOfPieces){
-            for(MoveType move: p.getAllowedMoves()){
-                switch (move){
-                    case VERTICAL:
-                        if(vertCheck(p, UP) || vertCheck(p, DOWN)) return false;
-                        break;
-                    case HORIZONTAL:
-                        if(horizontalCheck(p, RIGHT) || horizontalCheck(p, LEFT)) return false;
-                        break;
-                    case DIAGONAL:
-                        if(diagonoalCheck(p, RIGHT, UP) || diagonoalCheck(p, LEFT, UP) ||
-                            diagonoalCheck(p, RIGHT, DOWN) || diagonoalCheck(p, LEFT, DOWN)) return false;
-                        break;
-                    case KNIGHT:
-                        if (knigtCheck(p)) return false;
-                        break;
+            if(p.getxCoord() == player.getkingXCoord() && p.getyCoord() == player.getkingYCoord()) {
+                // go over around the king and checks all the tiles
+                int initialXCoord = p.getxCoord();
+                int initialYCoord = p.getyCoord();
+                int[] xCoords = {initialXCoord - 1, initialXCoord - 1, initialXCoord - 1, initialXCoord, initialXCoord,
+                                 initialXCoord + 1, initialXCoord + 1, initialXCoord + 1};
+                int[] yCoords = {initialYCoord - 1, initialYCoord, initialYCoord + 1, initialYCoord - 1,
+                        initialYCoord + 1, initialYCoord - 1, initialYCoord, initialYCoord + 1};
+                ArrayList<Piece> threats = Board.getPlayer(!color).getpieceList();
+                // this is done in order to avoid a situation where the current king's coordinates blocking the new ones
+                Board.board[initialXCoord + Board.X_UPPER_BOUND * initialYCoord] = null;
+                for(int i = 0; i < xCoords.length; i++)
+                {
+                    if(Board.boundCheck(xCoords[i], yCoords[i]))
+                    {
+                        if(Board.getPiece(xCoords[i],yCoords[i]) == null)
+                        {
+                            if(!Board.isUnderThreat(xCoords[i], yCoords[i], threats)){
+                                Board.board[initialXCoord + Board.X_UPPER_BOUND * initialYCoord] = p;
+                                return false;
+                            }
+                        }
+                        else {
+                            if(Board.getPiece(xCoords[i],yCoords[i]).getColor() != color){
+                                Piece temp = Board.getPiece(xCoords[i],yCoords[i]);
+                                // done in order to check if an enemy's piece is defended by another piece
+                                Board.board[xCoords[i] + Board.X_UPPER_BOUND * yCoords[i]] = null;
+                                if(!Board.isUnderThreat(xCoords[i], yCoords[i], threats)){
+                                    Board.board[initialXCoord + Board.X_UPPER_BOUND * initialYCoord] = temp;
+                                    return false;
+                                }
+                                Board.board[initialXCoord + Board.X_UPPER_BOUND * initialYCoord] = temp;
+                            }
+                        }
+                    }
+                }
+                Board.board[initialXCoord + Board.X_UPPER_BOUND * initialYCoord] = p;
+            }
+            else{
+                for(MoveType move: p.getAllowedMoves()){
+                    switch (move){
+                        case VERTICAL:
+                            if(vertCheck(p, UP) || vertCheck(p, DOWN)) return false;
+                            break;
+                        case HORIZONTAL:
+                            if(horizontalCheck(p, RIGHT) || horizontalCheck(p, LEFT)) return false;
+                            break;
+                        case DIAGONAL:
+                            if(diagonoalCheck(p, RIGHT, UP) || diagonoalCheck(p, LEFT, UP) ||
+                                    diagonoalCheck(p, RIGHT, DOWN) || diagonoalCheck(p, LEFT, DOWN)) return false;
+                            break;
+                        case KNIGHT:
+                            if (knigtCheck(p)) return false;
+                            break;
+                    }
                 }
             }
         }
