@@ -207,8 +207,8 @@ public class CheckmateChecker {
     private static boolean knigtCheck(Piece current){
         int initialXCoord = current.getxCoord();
         int initialYCoord = current.getyCoord();
-        int[] xCoords = {initialXCoord - 2, initialXCoord - 2, initialXCoord - 1, initialXCoord - 1,
-                         initialXCoord + 1, initialXCoord + 1, initialXCoord + 2, initialXCoord + 2};
+        int[] xCoords = {initialXCoord - 2, initialXCoord - 2, initialXCoord - 2, initialXCoord - 2,
+                         initialXCoord + 1, initialXCoord + 1, initialXCoord + 1, initialXCoord + 1};
         int[] yCoords = {initialYCoord - 2, initialYCoord + 2, initialYCoord - 1, initialYCoord + 1,
                          initialYCoord - 1, initialYCoord + 1, initialYCoord - 2, initialYCoord + 2};
         for(int i = 0; i < xCoords.length; i++)
