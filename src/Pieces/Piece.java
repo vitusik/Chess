@@ -219,7 +219,11 @@ public abstract class Piece {
      * @return true if there is an enemy piece at the end position or an empty cell
      */
     private boolean knighMoveCheck(int destXCoord, int destYCoord) {
-        return this.getColor() != Board.getPiece(destXCoord, destYCoord).getColor();
+        if(Board.getPiece(destXCoord, destYCoord) == null)
+        {
+            return true;
+        }
+        else return this.getColor() != Board.getPiece(destXCoord, destYCoord).getColor();
     }
 
     /**
