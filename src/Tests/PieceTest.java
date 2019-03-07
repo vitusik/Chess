@@ -1,3 +1,5 @@
+package Tests;
+
 import Board.*;
 import Pieces.*;
 

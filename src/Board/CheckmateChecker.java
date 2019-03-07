@@ -76,6 +76,8 @@ public class CheckmateChecker {
                         case KNIGHT:
                             if (knigtCheck(p)) return false;
                             break;
+                        case NO_MOVE:
+                            return false;
                     }
                 }
             }
